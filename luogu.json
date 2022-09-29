@@ -1,0 +1,1885 @@
+{
+    "pageTree": {
+        "name": "洛谷",
+        "template": "Excited",
+        "route": "index",
+        "children": [
+            {
+                "route": "theme.list",
+                "template": "theme.list",
+                "name": "主题商店",
+                "children": [
+                    {
+                        "route": "theme.design",
+                        "template": "theme.designer",
+                        "name": "主题设计",
+                        "url": null
+                    }
+                ],
+                "url": "/theme/list"
+            },
+            {
+                "route": "user.show",
+                "template": "user.show",
+                "name": "个人中心",
+                "url": null
+            },
+            {
+                "route": "problem.list",
+                "template": "problem.list",
+                "name": "题目列表",
+                "children": [
+                    {
+                        "route": "problem.show",
+                        "template": "problem.show",
+                        "name": "题目详情",
+                        "children": [
+                            {
+                                "route": "problem.edit",
+                                "template": "problem.edit",
+                                "name": "题目编辑",
+                                "url": null
+                            },
+                            {
+                                "route": "problem.solution",
+                                "template": "problem.solution",
+                                "name": "查看题解",
+                                "url": null
+                            }
+                        ],
+                        "url": null
+                    }
+                ],
+                "url": "/problem/list"
+            },
+            {
+                "name": "比赛列表",
+                "template": "contest.list",
+                "route": "contest.list",
+                "children": [
+                    {
+                        "name": "比赛详情",
+                        "route": "contest.show",
+                        "template": "contest.show",
+                        "url": null
+                    },
+                    {
+                        "name": "编辑比赛",
+                        "template": "contest.edit",
+                        "route": "contest.edit",
+                        "url": null
+                    }
+                ],
+                "url": "/contest/list"
+            },
+            {
+                "name": "评测记录",
+                "template": "record.list",
+                "route": "record.list",
+                "children": [
+                    {
+                        "name": "评测详情",
+                        "template": "record.show",
+                        "route": "record.show",
+                        "url": null
+                    }
+                ],
+                "url": "/record/list"
+            },
+            {
+                "name": "讨论列表",
+                "template": "Excited",
+                "route": "discuss.list",
+                "children": [
+                    {
+                        "name": "讨论详情",
+                        "template": "Excited",
+                        "route": "discuss.show",
+                        "url": null
+                    }
+                ]
+            },
+            {
+                "name": "题单列表",
+                "template": "training.list",
+                "route": "training.list",
+                "children": [
+                    {
+                        "name": "题单详情",
+                        "template": "training.show",
+                        "route": "training.show",
+                        "url": null
+                    },
+                    {
+                        "name": "编辑题单",
+                        "template": "training.edit",
+                        "route": "training.edit",
+                        "url": null
+                    }
+                ],
+                "url": "/training/list"
+            },
+            {
+                "name": "团队详情",
+                "template": "team.show",
+                "route": "team.show",
+                "children": [
+                    {
+                        "name": "团队设置",
+                        "template": "team.setting",
+                        "route": "team.setting",
+                        "url": null
+                    },
+                    {
+                        "name": "团队升级",
+                        "template": "team.upgrade",
+                        "route": "team.upgrade",
+                        "url": null
+                    }
+                ],
+                "url": null
+            },
+            {
+                "name": "创建题单",
+                "template": "team.create",
+                "route": "team.create",
+                "url": "/team/create"
+            },
+            {
+                "name": "图片上传",
+                "template": "image.list",
+                "route": "image.list",
+                "url": "/image"
+            },
+            {
+                "name": "云剪贴板",
+                "template": "paste.list",
+                "route": "paste.list",
+                "url": "/paste"
+            },
+            {
+                "name": "云剪贴板",
+                "template": "paste.show",
+                "route": "paste.show",
+                "url": null
+            },
+            {
+                "name": "咕值排名",
+                "template": "rank.list",
+                "route": "ranking.list",
+                "url": "/ranking"
+            },
+            {
+                "name": "创建团队",
+                "template": "Excited",
+                "route": "team.apply"
+            }
+        ],
+        "url": "/"
+    },
+    "ws": {
+        "server": "wss://ws.luogu.com.cn/ws"
+    },
+    "codeLanguages": {
+        "5": {
+            "name": "提交答案",
+            "family": null,
+            "disabled": false,
+            "canO2": false,
+            "fileExtensions": [],
+            "aceMode": "plain_text",
+            "hljsMode": "text",
+            "value": 5,
+            "type": "AnswerFile",
+            "order": 0
+        },
+        "1": {
+            "name": "Pascal",
+            "family": null,
+            "disabled": false,
+            "canO2": true,
+            "fileExtensions": [
+                "pas"
+            ],
+            "aceMode": "pascal",
+            "hljsMode": "pascal",
+            "value": 1,
+            "type": "Pascal",
+            "order": 1
+        },
+        "2": {
+            "name": "C",
+            "family": "c",
+            "disabled": false,
+            "canO2": true,
+            "fileExtensions": [
+                "c"
+            ],
+            "aceMode": "c_cpp",
+            "hljsMode": "c",
+            "value": 2,
+            "type": "C",
+            "order": 2
+        },
+        "28": {
+            "name": "C++14 (GCC 9)",
+            "family": "c",
+            "disabled": false,
+            "canO2": true,
+            "fileExtensions": [
+                "cc",
+                "cpp",
+                "cxx"
+            ],
+            "aceMode": "c_cpp",
+            "hljsMode": "cpp",
+            "value": 28,
+            "type": "Cpp14Gcc9",
+            "order": 3
+        },
+        "3": {
+            "name": "C++98",
+            "family": "c",
+            "disabled": false,
+            "canO2": true,
+            "fileExtensions": [
+                "cc",
+                "cpp",
+                "cxx"
+            ],
+            "aceMode": "c_cpp",
+            "hljsMode": "cpp",
+            "value": 3,
+            "type": "CPP98",
+            "order": 4
+        },
+        "4": {
+            "name": "C++11",
+            "family": "c",
+            "disabled": false,
+            "canO2": true,
+            "fileExtensions": [
+                "cc",
+                "cpp",
+                "cxx"
+            ],
+            "aceMode": "c_cpp",
+            "hljsMode": "cpp",
+            "value": 4,
+            "type": "CPP11",
+            "order": 5
+        },
+        "11": {
+            "name": "C++14",
+            "family": "c",
+            "disabled": false,
+            "canO2": true,
+            "fileExtensions": [
+                "cc",
+                "cpp",
+                "cxx"
+            ],
+            "aceMode": "c_cpp",
+            "hljsMode": "cpp",
+            "value": 11,
+            "type": "CPP14",
+            "order": 6
+        },
+        "12": {
+            "name": "C++17",
+            "family": "c",
+            "disabled": false,
+            "canO2": true,
+            "fileExtensions": [
+                "cc",
+                "cpp",
+                "cxx"
+            ],
+            "aceMode": "c_cpp",
+            "hljsMode": "cpp",
+            "value": 12,
+            "type": "CPP17",
+            "order": 7
+        },
+        "27": {
+            "name": "C++20",
+            "family": "c",
+            "disabled": false,
+            "canO2": true,
+            "fileExtensions": [
+                "cc",
+                "cpp",
+                "cxx"
+            ],
+            "aceMode": "c_cpp",
+            "hljsMode": "cpp",
+            "value": 27,
+            "type": "CPP20",
+            "order": 8
+        },
+        "6": {
+            "name": "Python 2",
+            "family": "python",
+            "disabled": false,
+            "canO2": false,
+            "fileExtensions": [
+                "py"
+            ],
+            "aceMode": "python",
+            "hljsMode": "python",
+            "value": 6,
+            "type": "Python2",
+            "order": 9
+        },
+        "24": {
+            "name": "PyPy 2",
+            "family": "python",
+            "disabled": false,
+            "canO2": false,
+            "fileExtensions": [
+                "py"
+            ],
+            "aceMode": "python",
+            "hljsMode": "python",
+            "value": 24,
+            "type": "PyPy2",
+            "order": 10
+        },
+        "7": {
+            "name": "Python 3",
+            "family": "python",
+            "disabled": false,
+            "canO2": false,
+            "fileExtensions": [
+                "py"
+            ],
+            "aceMode": "python",
+            "hljsMode": "python",
+            "value": 7,
+            "type": "Python3",
+            "order": 11
+        },
+        "25": {
+            "name": "PyPy 3",
+            "family": "python",
+            "disabled": false,
+            "canO2": false,
+            "fileExtensions": [
+                "py"
+            ],
+            "aceMode": "python",
+            "hljsMode": "python",
+            "value": 25,
+            "type": "PyPy3",
+            "order": 12
+        },
+        "8": {
+            "name": "Java 8",
+            "family": null,
+            "disabled": false,
+            "canO2": false,
+            "fileExtensions": [
+                "java"
+            ],
+            "aceMode": "java",
+            "hljsMode": "java",
+            "value": 8,
+            "type": "Java8",
+            "order": 13
+        },
+        "15": {
+            "name": "Rust",
+            "family": null,
+            "disabled": false,
+            "canO2": true,
+            "fileExtensions": [
+                "rs"
+            ],
+            "aceMode": "rust",
+            "hljsMode": "rust",
+            "value": 15,
+            "type": "Rust",
+            "order": 14
+        },
+        "14": {
+            "name": "Go",
+            "family": null,
+            "disabled": false,
+            "canO2": false,
+            "fileExtensions": [
+                "go"
+            ],
+            "aceMode": "golang",
+            "hljsMode": "golang",
+            "value": 14,
+            "type": "Go",
+            "order": 15
+        },
+        "19": {
+            "name": "Haskell",
+            "family": null,
+            "disabled": false,
+            "canO2": true,
+            "fileExtensions": [
+                "hs"
+            ],
+            "aceMode": "haskell",
+            "hljsMode": "haskell",
+            "value": 19,
+            "type": "Haskell",
+            "order": 16
+        },
+        "30": {
+            "name": "OCaml",
+            "family": null,
+            "disabled": true,
+            "canO2": false,
+            "fileExtensions": [
+                "ml"
+            ],
+            "aceMode": "ocaml",
+            "hljsMode": "ocaml",
+            "value": 30,
+            "type": "OCaml",
+            "order": 17
+        },
+        "31": {
+            "name": "Julia",
+            "family": null,
+            "disabled": true,
+            "canO2": false,
+            "fileExtensions": [
+                "jl"
+            ],
+            "aceMode": "julia",
+            "hljsMode": "julia",
+            "value": 31,
+            "type": "Julia",
+            "order": 18
+        },
+        "32": {
+            "name": "Lua",
+            "family": null,
+            "disabled": true,
+            "canO2": false,
+            "fileExtensions": [
+                "lua"
+            ],
+            "aceMode": "lua",
+            "hljsMode": "lua",
+            "value": 32,
+            "type": "Lua",
+            "order": 19
+        },
+        "20": {
+            "name": "Kotlin/Native",
+            "family": "kotlin",
+            "disabled": true,
+            "canO2": false,
+            "fileExtensions": [
+                "kt"
+            ],
+            "aceMode": "kotlin",
+            "hljsMode": "kotlin",
+            "value": 20,
+            "type": "KotlinNative",
+            "order": 20
+        },
+        "21": {
+            "name": "Kotlin/JVM",
+            "family": "kotlin",
+            "disabled": false,
+            "canO2": false,
+            "fileExtensions": [
+                "kt"
+            ],
+            "aceMode": "kotlin",
+            "hljsMode": "kotlin",
+            "value": 21,
+            "type": "KotlinJvm",
+            "order": 21
+        },
+        "22": {
+            "name": "Scala",
+            "family": null,
+            "disabled": false,
+            "canO2": false,
+            "fileExtensions": [
+                "scala"
+            ],
+            "aceMode": "scala",
+            "hljsMode": "scala",
+            "value": 22,
+            "type": "Scala",
+            "order": 22
+        },
+        "17": {
+            "name": "C# Mono",
+            "family": null,
+            "disabled": false,
+            "canO2": false,
+            "fileExtensions": [
+                "cs"
+            ],
+            "aceMode": "csharp",
+            "hljsMode": "csharp",
+            "value": 17,
+            "type": "CSharp",
+            "order": 23
+        },
+        "18": {
+            "name": "Visual Basic Mono",
+            "family": null,
+            "disabled": true,
+            "canO2": false,
+            "fileExtensions": [
+                "vb"
+            ],
+            "aceMode": "vbscript",
+            "hljsMode": "vb",
+            "value": 18,
+            "type": "VB",
+            "order": 24
+        },
+        "29": {
+            "name": "F#.NET",
+            "family": null,
+            "disabled": true,
+            "canO2": false,
+            "fileExtensions": [
+                "fs"
+            ],
+            "aceMode": "fsharp",
+            "hljsMode": "fsharp",
+            "value": 29,
+            "type": "FSharp",
+            "order": 25
+        },
+        "9": {
+            "name": "Node.js LTS",
+            "family": null,
+            "disabled": false,
+            "canO2": false,
+            "fileExtensions": [
+                "js"
+            ],
+            "aceMode": "javascript",
+            "hljsMode": "javascript",
+            "value": 9,
+            "type": "Node",
+            "order": 26
+        },
+        "10": {
+            "name": "Shell",
+            "family": null,
+            "disabled": true,
+            "canO2": false,
+            "fileExtensions": [
+                "sh"
+            ],
+            "aceMode": "sh",
+            "hljsMode": "shell",
+            "value": 10,
+            "type": "Shell",
+            "order": 27
+        },
+        "16": {
+            "name": "PHP",
+            "family": null,
+            "disabled": false,
+            "canO2": false,
+            "fileExtensions": [
+                "php"
+            ],
+            "aceMode": "php",
+            "hljsMode": "php",
+            "value": 16,
+            "type": "PHP7",
+            "order": 28
+        },
+        "13": {
+            "name": "Ruby",
+            "family": null,
+            "disabled": false,
+            "canO2": false,
+            "fileExtensions": [
+                "rb"
+            ],
+            "aceMode": "ruby",
+            "hljsMode": "ruby",
+            "value": 13,
+            "type": "Ruby",
+            "order": 29
+        },
+        "23": {
+            "name": "Perl",
+            "family": null,
+            "disabled": false,
+            "canO2": false,
+            "fileExtensions": [
+                "pl"
+            ],
+            "aceMode": "perl",
+            "hljsMode": "perl",
+            "value": 23,
+            "type": "Perl",
+            "order": 30
+        },
+        "26": {
+            "name": "文言",
+            "family": null,
+            "disabled": true,
+            "canO2": false,
+            "fileExtensions": [
+                "wenyan"
+            ],
+            "aceMode": "plain_text",
+            "hljsMode": "text",
+            "value": 26,
+            "type": "Wenyan",
+            "order": 31
+        }
+    },
+    "contestRuleTypes": {
+        "1": {
+            "id": 1,
+            "name": "OI",
+            "color": "orange-3"
+        },
+        "2": {
+            "id": 2,
+            "name": "ACM",
+            "color": "purple-3"
+        },
+        "3": {
+            "id": 3,
+            "name": "乐多",
+            "color": "gold-3"
+        },
+        "4": {
+            "id": 4,
+            "name": "IOI",
+            "color": "gold-3"
+        },
+        "5": {
+            "id": 5,
+            "name": "CodeForces (暂不可用)",
+            "color": "gold-3"
+        }
+    },
+    "recordStatus": {
+        "-1": {
+            "id": -1,
+            "name": "Unshown",
+            "shortName": "Unshown",
+            "color": "grey-5",
+            "filterable": false
+        },
+        "0": {
+            "id": 0,
+            "name": "Waiting",
+            "shortName": "Waiting",
+            "color": "blue-4",
+            "filterable": false
+        },
+        "1": {
+            "id": 1,
+            "name": "Judging",
+            "shortName": "Judging",
+            "color": "blue-3",
+            "filterable": false
+        },
+        "2": {
+            "id": 2,
+            "name": "Compile Error",
+            "shortName": "CE",
+            "color": "yellow-3",
+            "filterable": true
+        },
+        "3": {
+            "id": 3,
+            "name": "Output Limit Exceeded",
+            "shortName": "OLE",
+            "color": "blue-5",
+            "filterable": false
+        },
+        "4": {
+            "id": 4,
+            "name": "Memory Limit Exceeded",
+            "shortName": "MLE",
+            "color": "blue-5",
+            "filterable": false
+        },
+        "5": {
+            "id": 5,
+            "name": "Time Limit Exceeded",
+            "shortName": "TLE",
+            "color": "blue-5",
+            "filterable": false
+        },
+        "6": {
+            "id": 6,
+            "name": "Wrong Answer",
+            "shortName": "WA",
+            "color": "red-3",
+            "filterable": false
+        },
+        "7": {
+            "id": 7,
+            "name": "Runtime Error",
+            "shortName": "RE",
+            "color": "purple-3",
+            "filterable": false
+        },
+        "11": {
+            "id": 11,
+            "name": "Unknown Error",
+            "shortName": "UKE",
+            "color": "lapis-4",
+            "filterable": false
+        },
+        "12": {
+            "id": 12,
+            "name": "Accepted",
+            "shortName": "AC",
+            "color": "green-3",
+            "filterable": true
+        },
+        "14": {
+            "id": 14,
+            "name": "Unaccepted",
+            "shortName": "Unaccepted",
+            "color": "red-3",
+            "filterable": true
+        },
+        "21": {
+            "id": 21,
+            "name": "Hack Success",
+            "shortName": "Hack Success",
+            "color": "green-3",
+            "filterable": false
+        },
+        "22": {
+            "id": 22,
+            "name": "Hack Failure",
+            "shortName": "Hack Failure",
+            "color": "red-3",
+            "filterable": false
+        },
+        "23": {
+            "id": 23,
+            "name": "Hack Skipped",
+            "shortName": "Hack Skipped",
+            "color": "blue-5",
+            "filterable": false
+        }
+    },
+    "recordSortTypes": [
+        {
+            "id": 0,
+            "name": "最新提交"
+        },
+        {
+            "id": 1,
+            "name": "最优解"
+        }
+    ],
+    "messageStatusTypes": [
+        {
+            "id": 0,
+            "name": "Deleted"
+        },
+        {
+            "id": 1,
+            "name": "Unread"
+        },
+        {
+            "id": 2,
+            "name": "Read"
+        }
+    ],
+    "translation": {
+        "authenticate": {
+            "logged_in": "您已经登录",
+            "wrong_password": "密码不正确",
+            "uid_mismatch": "UID不匹配",
+            "incorrect_password_or_code": "输入的密码或者两步验证码错误",
+            "unlocked": "用户已经解锁"
+        },
+        "ban": {
+            "ip_ban": "该 IP 地址被禁止访问洛谷。有疑问请发送邮件至 shensu283@luogu.com.cn 联系管理员，并提供用户名、学校名字和 IP 地址。",
+            "user_ban": "该账户因为违反 <a href=\"/blog/luogu/social-rules\">洛谷社区规则</a> 被封禁。如需咨询或者申请解封，请发送符合要求的材料至电子邮箱 shensu283@luogu.com.cn，管理员可能在 30 日内处理，也有可能不处理。"
+        },
+        "contest": {
+            "not_found": "比赛未找到",
+            "permission_denied": "您无权查看该比赛",
+            "already_signed": "您已经报名该比赛了",
+            "invalid_join_code": "邀请码错误",
+            "invitation_code_used": "邀请码已被使用",
+            "not_ongoing": "比赛尚未开始",
+            "edit": {
+                "too_many_problems": "题目数量过多",
+                "no_edit_access": "您没有权限编辑该比赛",
+                "need_pid": "需要选择题目",
+                "can_not_add": "这道题目无法被添加至该比赛",
+                "need_score": "需要指定分数",
+                "need_visibility_type": "需要指定比赛类型",
+                "not_qualified_for_public_contest": "您未达到提交公开赛的要求，不能提交比赛审核。",
+                "can_not_change_public": "无法直接设置为已经审核的状态或者更改大类",
+                "need_hoster": "需要指定举办者",
+                "no_access_hoster": "您无权指定举办者为这个团队或者用户",
+                "hoster_not_found": "举办者未找到",
+                "invalid_time": "开始时间大于结束时间",
+                "need_description": "需要指定描述",
+                "need_name": "需要指定比赛标题",
+                "need_method": "需要指定赛制",
+                "need_startTime": "需要指定开始时间",
+                "need_endTime": "需要指定结束时间",
+                "had_added": "该题目已经加入比赛，如果需要调整顺序，请删除题目后重新添加",
+                "had_not_added": "该题目并未加入比赛"
+            }
+        },
+        "discuss": {
+            "not_found": "不存在的讨论",
+            "permission_denied": "您无权查看此讨论"
+        },
+        "framework": {
+            "request": {
+                "not_json_request": "提交的请求不是合法的JSON数据",
+                "query_invalid": "请求参数非法"
+            },
+            "serializer": {
+                "unexpected_force_type": "错误的ForceType",
+                "not_found": "Serializer未找到",
+                "unexpected_criteria": "序列化规则不合法"
+            }
+        },
+        "generic": {
+            "owner_not_verified": "该内容的拥有者没有完成实名认证",
+            "frequency_limit": "请求频繁，请稍候再试",
+            "session_expired": "会话超时，请刷新页面后重试",
+            "invalid_referer": "不合法的来源，请重试",
+            "invalid_oauth_scope": "非法的OAuth作用域",
+            "access_denied": "拒绝访问",
+            "not_found": "该页面未找到",
+            "bad_request": "无效请求",
+            "unavailable_for_legal_reasons": "该功能暂不可用",
+            "invalid_order_by": "不合法的排序参数",
+            "invalid_order": "不合法的排序方式"
+        },
+        "identity_certify": {
+            "invalid_national_id": "身份证号不合法",
+            "user_exists": "已经有其他账号使用该身份证进行认证"
+        },
+        "message": {
+            "permission_denied": "您无权操作该信息",
+            "ban": "您已经被禁止使用私信功能。",
+            "need_user": "需要指定用户",
+            "need_id": "需要指定消息id",
+            "not_found": "不存在该消息或者已被删除",
+            "can_not_send_to_self": "不能给自己发送私信",
+            "too_long": "发送的消息太长",
+            "receiver_banned": "根据对方的设置，您不能向TA发送私信"
+        },
+        "oierdb": {
+            "school_not_found": "未找到学校信息，请联系管理员进行人工认证",
+            "no_prize_found": "未找到您的获奖记录，请确定姓名、学校是否填写正确。也有可能是奖项列表在洛谷尚未更新。",
+            "cannot_match": "根据您提供的信息，我们暂时无法为您认证奖项。请您在您的常用地重试，或拍照或扫描您的证书，发送至 shensu238@luogu.com.cn ，我们将人工为您处理。"
+        },
+        "paste": {
+            "not_found": "剪贴板内容未找到",
+            "permission_denied": "您无权查看该剪贴板"
+        },
+        "problem": {
+            "not_found": "题目未找到",
+            "permission_denied": "您无权查看该题目",
+            "invalid_type": "不合法的题目类型",
+            "invalid_page": "不合法的页码",
+            "uncreateable_type": "您无法创建这类题目",
+            "solution_disabled": "该题目未启用题解功能",
+            "edit": {
+                "test_case_updaing": "测试点正在更新",
+                "permission_denied": "您没有编辑此题目的权限",
+                "no_test_data": "请先上传测试数据",
+                "unexpected_strategy": "不合法的积分策略",
+                "need_scoring_script": "自定义计分需要计分脚本",
+                "same_type": "无法迁移到相同的类型",
+                "need_team_id": "需要提供团队ID",
+                "unexpected_samples": "不合法的样例",
+                "unexpected_file_type": "不合法的文件类型",
+                "need_type": "需要指定创建的题目类型",
+                "need_provider": "需要提供团队Id",
+                "time_limit": "单点时间限制不可大于5s，如有需要请联系管理员",
+                "unexpected_time_limit": "不合法的时间限制",
+                "memory_limit": "单点空间不可大于512MB，如有需要请联系管理员",
+                "unexpected_memory_limit": "不合法的空间限制",
+                "unexpected_full_score": "不合法的单点分数",
+                "too_many_subtask": "子任务数不可大于10个，如有需要请联系管理员",
+                "total_time_limit": "总时限不可大于120秒，如有需要请联系管理员"
+            },
+            "attachment": {
+                "not_found": "附件未找到",
+                "no_space_left": "题目附件已经没有剩余空间"
+            },
+            "task_list": {
+                "problem_not_found": "该题目尚未收藏",
+                "too_long": "您已收藏了过多的题目",
+                "already_collected": "该题目已经被收藏"
+            },
+            "submit": {
+                "can_not_submit": "您不能提交该题目",
+                "frequency_limit_for_unverified_user": "提交过于频繁，请过10分钟再尝试，您可进行实名认证以提高提交限制次数",
+                "frequency_limit": "提交过于频繁，请过3分钟再尝试",
+                "long_time_problem_limit": "提交长时限题目超过您当日最大限制",
+                "code_too_short": "代码过短",
+                "code_too_long": "代码过长",
+                "disallowed_pragmas": "程序包含不允许使用的预编译头，请去除后重新提交"
+            },
+            "resolve": {
+                "too_many_pids": "给定的PID太多"
+            },
+            "clone": {
+                "vjudge_problem": "暂时不支持克隆RemoteJudge题目",
+                "team_only": "暂时只支持克隆到团队"
+            }
+        },
+        "record": {
+            "not_found": "记录未找到",
+            "permission_denied": "您不能查看本条评测记录",
+            "ongoing_contest_only": "仅允许查看正在进行或结束的比赛记录",
+            "invalid_status": "不合法的记录状态",
+            "invalid_language": "不合法的语言类型",
+            "download": {
+                "exceed_limit": "您已超出本日可下载数据最大次数"
+            }
+        },
+        "team": {
+            "not_found": "团队未找到",
+            "disabled": "团队已被删除或已被管理员禁用",
+            "no_admin_permission": "没有团队管理权限",
+            "cannot_remove_master": "团队主不能够退出团队",
+            "cannot_edit_group": "团队已禁止编辑自身组别，请联系团队管理员。",
+            "not_joined": "该用户未加入该团队",
+            "exceeds_limit": "您已经创建、加入了过多团队",
+            "too_many_groups": "创建的分组数量超过限制",
+            "group_name_length": "分组名称应在20个字符以内",
+            "group_name_character": "分组名称仅能由汉字和ASCII字符组成。",
+            "group_name_charset": "分组名称仅能由汉字和ASCII字符组成。",
+            "premium": {
+                "already_trialed": "该团队曾是高级团队，或您已经申请过试用高级团队功能。每个用户及团队仅可申请一次试用。",
+                "exceeds_normal_limit": "您已经超过了普通团队使用该功能的限制，请订阅高级团队服务以解除限制。",
+                "premium_only": "该功能仅限高级团队使用，请订阅高级团队服务以解除限制。"
+            },
+            "name": {
+                "duplicate_name": "和其他的团队重名，请更换名称",
+                "length": "团队名长度应介于4到30字符之间"
+            },
+            "join": {
+                "length": "验证信息长度应介于4到30字符之间",
+                "needs_apply_message": "请填写验证信息",
+                "already_joined": "您已加入该团队",
+                "pending_review": "您已经申请过加入该团队，正在等待审核",
+                "join_disallowed": "该团队不允许用户加入，请与团队管理员联系"
+            }
+        },
+        "upload_image": {
+            "not_found": "图片未找到",
+            "permission_denied": "您无权编辑该图片，或者没有管理权限",
+            "ban": "您尚未进行实名认证或者已经被禁止使用图床",
+            "no_space_left": "您剩余储存空间不够上传该图片或者已经被禁止使用图床",
+            "image_only": "仅可以上传图片",
+            "frequency_limit": "24h内最多上传50张图片",
+            "not_oss_callback": "非法的OSS回调请求",
+            "need_id": "需要提供图片id",
+            "need_user": "需要提供用户",
+            "need_watermarkType": "需要提供水印类型",
+            "need_size": "需要提供图片大小",
+            "need_filename": "需要提供文件名",
+            "invalid_type": "不合法的类型",
+            "need_introduction": "个人简介不能为空"
+        },
+        "user": {
+            "please_re_login": "请登出，并重新登录您的洛谷账号。使用第三方登陆时，Remote Judge暂时不可使用。",
+            "muted": "您已被禁言",
+            "not_found": "用户未找到",
+            "not_logged_in": "用户尚未登录",
+            "not_verified": "由于您未通过实名认证，无法使用该功能",
+            "not_admin": "您不是管理员",
+            "special_account_status": "系统检测到您的账号存在风险，暂时无法登录。请您重置密码后尝试重新登录。",
+            "cannot_follow": "根据对方用户的设置，您暂时无法关注此用户",
+            "not_identity_certified": "用户尚未绑定身份证号",
+            "same_status": "新的用户关系与原来相同",
+            "need_setting": "需要提供用户设置",
+            "slogan_too_long": "签名长度不能超过127字符",
+            "open_source_limit": {
+                "time": "由于您在此加入代码公开计划未满30天，不能退出",
+                "unverified": "由于您未进行实名认证，无法加入代码公开计划"
+            },
+            "username": {
+                "length": "用户名长度应介于4到20字节",
+                "character": "用户名仅能使用英文字母、数字、下划线或中文",
+                "character_2": "用户名仅能使用英文字母、数字、下划线",
+                "character_unverified": "由于您未实名认证（绑定手机号），用户名仅能使用英文字母、数字或下划线",
+                "numeric": "用户名不能为纯数字",
+                "username_taken": "该用户名已被使用"
+            },
+            "password": {
+                "length": "密码长度应介于6到20字节",
+                "charset": "密码需要包含至少一个数字和一个字母"
+            },
+            "register": {
+                "email_taken": "该邮箱已被使用",
+                "phone_taken": "该手机已被使用"
+            },
+            "openid": {
+                "already_exists": "您已绑定该平台账号"
+            },
+            "contact": {
+                "already_bind": "您已经绑定了这种联系方式",
+                "china_phone_only": "目前仅支持中国大陆境内手机号绑定"
+            }
+        },
+        "verify": {
+            "invalid_captcha": "验证码错误",
+            "wrong_verify_code": "邮箱或手机验证码不正确",
+            "endpoint_format": "邮箱或手机格式不正确",
+            "3minute_frequency_limit": "发送过于频繁，请稍候再试",
+            "ip_frequency_limit": "当前IP超出当日发送限制，请明日再试",
+            "endpoint_frequency_limit": "当前手机号超出当日发送限制，请明日再试",
+            "user_already_exist": "使用该邮箱或手机的用户已存在",
+            "user_not_exist": "使用该邮箱或手机的用户不存在",
+            "2fa": {
+                "had_set": "您已经设置了两步验证码",
+                "unset": "您还未设置两部验证码",
+                "incorrect_2fa_code": "错误的两步验证码"
+            }
+        },
+        "vjudge": {
+            "invalid_oj": "不合法的OJ",
+            "email_name": "请使用您在OJ的用户名登录，不支持使用邮箱绑定账号",
+            "login_fail": "登录失败（用户名或密码错误？）",
+            "network_error": "与对方OJ通讯不畅，请稍后再试",
+            "logout_and_retry": "请重新登陆后再次尝试",
+            "unbind": "您尚未绑定该OJ账户",
+            "bind_error": "读取您的OJ账户数据时出现异常，请重新绑定尝试",
+            "uva_public_account": "提交Uva题目时请先绑定自己的Uva账号"
+        },
+        "training": {
+            "unexpected_type": "无权创建该类型的题单",
+            "can_not_clone": "此题单无法再被转存",
+            "can_not_view_scoreboard": "该题单无法查看积分榜",
+            "has_joined": "已经收藏过题单",
+            "not_joined": "尚未加入训练",
+            "not_found": "题单未找到",
+            "setting": {
+                "title_too_long": "题单的标题太长",
+                "empty_title": "标题不可为空"
+            },
+            "homework": {
+                "exceeds_join_limit": "该作业参与人数已超出上限"
+            }
+        }
+    },
+    "problemDifficulty": [
+        {
+            "id": 0,
+            "name": "暂无评定",
+            "color": "grey-3"
+        },
+        {
+            "id": 1,
+            "name": "入门",
+            "color": "pink-3"
+        },
+        {
+            "id": 2,
+            "name": "普及-",
+            "color": "orange-3"
+        },
+        {
+            "id": 3,
+            "name": "普及/提高-",
+            "color": "gold-3"
+        },
+        {
+            "id": 4,
+            "name": "普及+/提高",
+            "color": "green-3"
+        },
+        {
+            "id": 5,
+            "name": "提高+/省选-",
+            "color": "blue-3"
+        },
+        {
+            "id": 6,
+            "name": "省选/NOI-",
+            "color": "purple-3"
+        },
+        {
+            "id": 7,
+            "name": "NOI/NOI+/CTSC",
+            "color": "lapis-4"
+        }
+    ],
+    "senderEndpointTypes": {
+        "1": {
+            "id": 1,
+            "type": "Email"
+        },
+        "2": {
+            "id": 2,
+            "type": "SMS"
+        }
+    },
+    "contestAccessLevel": [
+        {
+            "id": 0,
+            "name": "ViewDisallowed"
+        },
+        {
+            "id": 1,
+            "name": "View"
+        },
+        {
+            "id": 2,
+            "name": "Join"
+        },
+        {
+            "id": 3,
+            "name": "ViewProblem"
+        },
+        {
+            "id": 4,
+            "name": "ViewScoreBoard"
+        },
+        {
+            "id": 5,
+            "name": "Management"
+        }
+    ],
+    "rankingSortTypes": [
+        {
+            "id": 0,
+            "valueName": "rating",
+            "name": "总分"
+        },
+        {
+            "id": 1,
+            "valueName": "basicRating",
+            "name": "基础"
+        },
+        {
+            "id": 2,
+            "valueName": "socialRating",
+            "name": "社区"
+        },
+        {
+            "id": 3,
+            "valueName": "contestRating",
+            "name": "比赛"
+        },
+        {
+            "id": 4,
+            "valueName": "practiceRating",
+            "name": "练习"
+        },
+        {
+            "id": 5,
+            "valueName": "prizeRating",
+            "name": "成就"
+        }
+    ],
+    "openIdPlatformTypes": {
+        "1": "微信",
+        "2": "GitHub"
+    },
+    "contestVisibilityTypes": [
+        {
+            "id": 0,
+            "name": "封禁比赛",
+            "color": "grey-5",
+            "userCreatable": false,
+            "scope": "disabled",
+            "invitation": false
+        },
+        {
+            "id": 1,
+            "name": "官方比赛",
+            "color": "red-3",
+            "userCreatable": false,
+            "scope": "global",
+            "invitation": false
+        },
+        {
+            "id": 2,
+            "name": "团队公开赛",
+            "color": "green-4",
+            "userCreatable": false,
+            "scope": "team",
+            "invitation": false
+        },
+        {
+            "id": 3,
+            "name": "团队内部赛",
+            "color": "blue-3",
+            "userCreatable": true,
+            "scope": "team",
+            "invitation": false
+        },
+        {
+            "id": 4,
+            "name": "个人公开赛",
+            "color": "blue-3",
+            "userCreatable": false,
+            "scope": "personal",
+            "invitation": false
+        },
+        {
+            "id": 5,
+            "name": "个人邀请赛",
+            "color": "lapis-3",
+            "userCreatable": true,
+            "scope": "personal",
+            "invitation": true
+        },
+        {
+            "id": 6,
+            "name": "团队邀请赛",
+            "color": "lapis-3",
+            "userCreatable": true,
+            "scope": "team",
+            "invitation": true
+        },
+        {
+            "id": 7,
+            "name": "团队公开赛 (待审核)",
+            "color": "green-4",
+            "userCreatable": true,
+            "scope": "team",
+            "invitation": false
+        },
+        {
+            "id": 8,
+            "name": "个人公开赛 (待审核)",
+            "color": "blue-3",
+            "userCreatable": true,
+            "scope": "personal",
+            "invitation": false
+        }
+    ],
+    "routes": {
+        "blog_admin.article.list": "/blogAdmin/article/list",
+        "blog_admin.article.edit": "/blogAdmin/article/edit/{blogID}",
+        "blog_admin.article.new": "/blogAdmin/article/new",
+        "blog_admin.article.comments": "/blogAdmin/article/comments/{blogID}",
+        "blog_admin.article.post_edit": "/blogAdmin/article/post_edit/{blogID}",
+        "blog_admin.article.post_new": "/blogAdmin/article/post_new",
+        "blog_admin.article.delete_comment": "/blogAdmin/article/deleteComment/{blogID}",
+        "lfe_all_config": "/_lfe/config",
+        "lfe_tags": "/_lfe/tags",
+        "discuss.show": "/discuss/{id}",
+        "contest.list": "/contest/list",
+        "contest.show": "/contest/{id}",
+        "contest.edit": "/contest/edit/{id}",
+        "contest.new": "/contest/new",
+        "paste.list": "/paste",
+        "paste.new": "/paste/new",
+        "paste.edit": "/paste/edit/{id}",
+        "paste.delete": "/paste/delete/{id}",
+        "paste.show": "/paste/{id}",
+        "user.show": "/user/{uid}",
+        "user.notification": "/user/notification",
+        "user.setting": "/user/setting",
+        "user.bind_contact_endpoint": "/user/bindContactEndpoint",
+        "user.two_factor_setup": "/user/twoFactorSetup",
+        "problem.list": "/problem/list",
+        "problem.show": "/problem/{pid}",
+        "problem.edit": "/problem/edit/{pid}",
+        "problem.new": "/problem/new",
+        "problem.solution": "/problem/solution/{pid}",
+        "theme.list": "/theme/list",
+        "theme.setTheme": "/theme/setTheme/{id}",
+        "theme.design": "/theme/design/{id}",
+        "theme.edit": "/theme/edit/{id}",
+        "theme.delete": "/theme/delete/{id}",
+        "image.list": "/image",
+        "ranking.list": "/ranking",
+        "report": "/report/{type}",
+        "auth.login": "/auth/login",
+        "auth.unlock": "/auth/unlock",
+        "auth.forget_password": "/auth/forgetPassword",
+        "auth.register": "/auth/register",
+        "auth.openid_landing": "/auth/openidLanding",
+        "app.ide": "/ide",
+        "training.list": "/training/list",
+        "training.show": "/training/{id}",
+        "training.edit": "/training/edit/{id}",
+        "training.new": "/training/new",
+        "record.list": "/record/list",
+        "record.show": "/record/{id}",
+        "team.show": "/team/{id}",
+        "team.setting": "/team/setting/{id}",
+        "team.upgrade": "/team/upgrade/{id}",
+        "team.create": "/team/create",
+        "old_discuss.list": "/discuss/lists",
+        "blog.jump_to_post": "/blog/_post/{id}",
+        "blog.list": "/blog/{identifier}/",
+        "blog.sitemap": "/blog/{identifier}/_sitemap",
+        "blog.show": "/blog/{identifier}/{postIdentifier}",
+        "chat.list": "/chat",
+        "advertisement.get_advertisement": "/api/qiaFan/getFan/{groupId}",
+        "api.contest.join": "/fe/api/contest/join/{id}",
+        "api.contest.scoreboard": "/fe/api/contest/scoreboard/{id}",
+        "api.contest.export_scoreboard": "/fe/api/contest/exportScoreboard/{id}",
+        "api.contest.export_invitation_code": "/fe/api/contest/exportInvitationCode/{id}",
+        "api.contest.verify_problem": "/fe/api/contest/verifyProblem/{id}",
+        "api.contest.edit_problem": "/fe/api/contest/editProblem/{id}",
+        "api.contest.edit": "/fe/api/contest/edit/{id}",
+        "api.contest.freeze_scoreboard": "/fe/api/contest/freezeScoreboard/{id}",
+        "api.contest.new": "/fe/api/contest/new",
+        "api.contest.delete": "/fe/api/contest/delete/{id}",
+        "api.contest.invitation_code": "/fe/api/contest/invitationCodeList/{id}",
+        "api.contest.generate_invitation_code": "/fe/api/contest/generateInvitationCode/{id}",
+        "api.user.get_info": "/api/user/info/{uid}",
+        "api.user.clear_unread_notification": "/api/user/clearUnreadNotification",
+        "api.user.bind_contact_endpoint": "/api/user/bindContactEndpoint",
+        "api.user.wxa_phone_bind": "/api/user/wxaPhoneBind",
+        "api.user.two_factor_setup": "/api/user/twoFactorSetup",
+        "api.user.start_identity_certify": "/api/user/startIdentityCertify",
+        "api.user.finish_identity_certify": "/api/user/finishIdentityCertify",
+        "api.user.set_user_prize_show_level": "/api/user/setUserPrizeShowLevel/{id}",
+        "api.user.set_ccf_level_show_level": "/api/user/setCCFLevelShowLevel",
+        "api.user.update_relation_ship": "/api/user/updateRelationShip",
+        "api.user.search": "/api/user/search",
+        "api.user.followings": "/api/user/followings",
+        "api.user.followers": "/api/user/followers",
+        "api.user.blacklist": "/api/user/blacklist",
+        "api.user.update_slogan": "/api/user/updateSlogan",
+        "api.user.joined_contest": "/api/user/joinedContests",
+        "api.user.created_posts": "/api/user/createdPosts",
+        "api.user.created_problems": "/api/user/createdProblems",
+        "api.user.created_contests": "/api/user/createdContests",
+        "api.user.marked_trainings": "/api/user/markedTrainings",
+        "api.user.created_trainings": "/api/user/createdTrainings",
+        "api.user.submitted_team_join_request": "/api/user/submittedTeamJoinRequest",
+        "api.user.update_header_image": "/api/user/updateHeaderImage",
+        "api.user.update_setting": "/api/user/updateSetting",
+        "api.user.update_username": "/api/user/updateUsername",
+        "api.user.bind_vjudge_account": "/api/user/bindVjudgeAccount",
+        "api.user.unbind_vjudge_account": "/api/user/unbindVjudgeAccount",
+        "api.user.update_introduction": "/api/user/updateIntroduction",
+        "api.user.unbind_openid": "/api/user/unbindOpenId/{platform}",
+        "api.user.leave_organization": "/api/user/leaveOrganization",
+        "api.user.current_user_info_oauth2": "/api/user/currentUserInfoOAuth2",
+        "api.openid.connect": "/api/openid/connect/{platform}",
+        "api.problem.tasklist_add": "/fe/api/problem/tasklistAdd",
+        "api.problem.tasklist_remove": "/fe/api/problem/tasklistRemove",
+        "api.problem.submit": "/fe/api/problem/submit/{pid}",
+        "api.problem.resolve_pid": "/fe/api/problem/resolvePID",
+        "api.problem.generate_attachment_upload_link": "/fe/api/problem/generateAttachmentUploadLink/{pid}",
+        "api.problem.download_attachment": "/fe/api/problem/downloadAttachment/{id}",
+        "api.problem.delete_attachment": "/fe/api/problem/deleteAttachment/{id}",
+        "api.problem.generate_data_upload_link": "/fe/api/problem/generateDataUploadLink/{pid}",
+        "api.problem.testdata_download": "/fe/api/problem/generateDataDownloadLink/{pid}",
+        "api.problem.new": "/fe/api/problem/new",
+        "api.problem.edit": "/fe/api/problem/edit/{pid}",
+        "api.problem.delete": "/fe/api/problem/delete/{pid}",
+        "api.problem.edit_test_case": "/fe/api/problem/editTestCase/{pid}",
+        "api.problem.clear_test_data_upload_status": "/fe/api/problem/clearTestDataUploadStatus/{pid}",
+        "api.problem.transfer": "/fe/api/problem/transfer/{pid}",
+        "api.problem.translate": "/fe/api/problem/translate/{pid}",
+        "api.image.detail": "/api/image/detail/{id}",
+        "api.image.delete": "/api/image/delete",
+        "api.image.generate_upload_link": "/api/image/generateUploadLink",
+        "api.verify.captcha": "/api/verify/captcha",
+        "api.verify.send_verification_code": "/api/verify/sendVerificationCode",
+        "api.verify.send_two_factor_code": "/api/verify/sendTwoFactorCode",
+        "api.report.submit": "/api/report/{type}",
+        "api.feed.list": "/api/feed/list",
+        "api.auth.wxa_phone_one_key_auth": "/api/auth/wxaPhoneOneKeyAuth",
+        "api.auth.user_pass_login": "/api/auth/userPassLogin",
+        "api.auth.sync_login": "/api/auth/syncLogin",
+        "api.auth.logout": "/api/auth/logout",
+        "api.auth.register": "/api/auth/register",
+        "api.auth.forget_password": "/api/auth/forgetPassword",
+        "api.auth.update_password": "/api/auth/updatePassword",
+        "api.auth.lock": "/api/auth/lock",
+        "api.auth.unlock": "/api/auth/unlock",
+        "api.training.mark": "/api/training/mark/{id}",
+        "api.training.unmark": "/api/training/unmark/{id}",
+        "api.training.scoreboard": "/api/training/scoreboard/{id}",
+        "api.training.export_scoreboard": "/api/training/exportScoreboard/{id}",
+        "api.training.edit": "/api/training/edit/{id}",
+        "api.training.new": "/api/training/new",
+        "api.training.clone": "/api/training/clone/{id}",
+        "api.training.transfer": "/api/training/transfer/{id}",
+        "api.training.delete": "/api/training/delete/{id}",
+        "api.training.problems": "/api/training/problems/{id}",
+        "api.training.edit_problems": "/api/training/editProblems/{id}",
+        "api.training.add_problem": "/api/training/addProblem/{id}",
+        "api.training.participants": "/api/training/participants/{id}",
+        "api.training.edit_participants": "/api/training/editParticipants/{id}",
+        "api.record.query_downloadable_testcase": "/fe/api/record/queryDownloadableTestcase/{id}",
+        "api.record.perform_download_testcase": "/fe/api/record/downloadTestcase/{id}",
+        "api.record.get_last_record_id": "/fe/api/record/lastRecordId",
+        "api.team.join": "/api/team/join/{id}",
+        "api.team.create": "/api/team/create",
+        "api.team.delete": "/api/team/delete/{id}",
+        "api.team.exit": "/api/team/exit/{id}",
+        "api.team.kick": "/api/team/kick/{id}",
+        "api.team.review": "/api/team/review/{id}",
+        "api.team.cancel_join_request": "/api/team/cancelJoinRequest/{id}",
+        "api.team.edit_group": "/api/team/editGroup/{id}",
+        "api.team.edit_member": "/api/team/editMember/{id}",
+        "api.team.set_master": "/api/team/setMaster/{id}",
+        "api.team.members": "/api/team/members/{id}",
+        "api.team.contests": "/api/team/contests/{id}",
+        "api.team.trainings": "/api/team/trainings/{id}",
+        "api.team.problems": "/api/team/problems/{id}",
+        "api.team.edit": "/api/team/edit/{id}",
+        "api.team.ban_user": "/api/team/banUser/{id}",
+        "api.team.cancel_ban": "/api/team/cancelBan/{id}",
+        "api.team.create_team_upgrade_order": "/api/team/createTeamUpgradeOrder/{id}",
+        "api.team.team_upgrade_order_list": "/api/team/teamUpgradeOrderList/{id}",
+        "api.team.request_free_premium_trial": "/api/team/requestFreePremiumTrial/{id}",
+        "api.team.join_request_list": "/api/team/joinRequestList/{id}",
+        "api.team.file_list": "/api/team/fileList/{id}",
+        "api.team.generate_file_upload_link": "/api/team/generateFileUploadLink/{id}",
+        "api.team.download_file": "/api/team/downloadFile/{id}",
+        "api.team.delete_file": "/api/team/deleteFile/{id}",
+        "api.team.rename_file": "/api/team/renameFile/{id}",
+        "api.blog.list": "/api/blog/lists",
+        "api.blog.detail": "/api/blog/detail/{blogId}",
+        "api.blog.vote": "/api/blog/vote/{blogId}",
+        "api.blog.reply": "/api/blog/reply/{blogId}",
+        "api.blog.replies": "/api/blog/replies/{blogId}",
+        "api.blog.delete": "/api/blog/delete/{blogId}",
+        "api.blog.user_blogs": "/api/blog/userBlogs",
+        "api.chat.new": "/api/chat/new",
+        "api.chat.delete": "/api/chat/delete",
+        "api.chat.record": "/api/chat/record",
+        "api.chat.clear_unread": "/api/chat/clearUnread",
+        "api.oierdb.cities": "/api/oierdb/cities",
+        "api.oierdb.schools": "/api/oierdb/schools",
+        "api.oierdb.match_prize": "/api/oierdb/matchPrize",
+        "backend.oss_callback.image_hosting": "/backend/oss/image_hosting",
+        "backend.oss_callback.oss_file_upload": "/backend/oss/oss_file_upload",
+        "backend.oss_callback.problem_test_data": "/backend/oss/problemTestData"
+    },
+    "userRelationshipTypes": [
+        {
+            "id": 0,
+            "type": "Unrelated"
+        },
+        {
+            "id": 1,
+            "type": "Following"
+        },
+        {
+            "id": 2,
+            "type": "Blacklisted"
+        }
+    ],
+    "scoringStrategyTypes": {
+        "0": {
+            "id": 0,
+            "type": "Sum",
+            "name": "加和"
+        },
+        "1": {
+            "id": 1,
+            "type": "Min",
+            "name": "最小值"
+        },
+        "2": {
+            "id": 2,
+            "type": "Max",
+            "name": "最大值"
+        },
+        "3": {
+            "id": 3,
+            "type": "ScoreMinTimeMax",
+            "name": "最小分值、最大时间"
+        },
+        "100": {
+            "id": 100,
+            "type": "Custom",
+            "name": "自定义"
+        }
+    },
+    "problemTypes": {
+        "P": {
+            "id": "P",
+            "type": "Public",
+            "name": "主题库",
+            "vjudge": false,
+            "userCreatable": false,
+            "searchable": true
+        },
+        "T": {
+            "id": "T",
+            "type": "Team",
+            "name": "团队题库",
+            "vjudge": false,
+            "userCreatable": true,
+            "searchable": false
+        },
+        "U": {
+            "id": "U",
+            "type": "User",
+            "name": "个人题库",
+            "vjudge": false,
+            "userCreatable": true,
+            "searchable": false
+        },
+        "B": {
+            "id": "B",
+            "type": "Beginner",
+            "name": "入门与面试",
+            "vjudge": false,
+            "userCreatable": false,
+            "searchable": true
+        },
+        "CF": {
+            "id": "CF",
+            "type": "CodeForces",
+            "name": "CodeForces",
+            "vjudge": true,
+            "userCreatable": false,
+            "searchable": true
+        },
+        "SP": {
+            "id": "SP",
+            "type": "SPOJ",
+            "name": "SPOJ",
+            "vjudge": true,
+            "userCreatable": false,
+            "searchable": true
+        },
+        "AT": {
+            "id": "AT",
+            "type": "AtCoder",
+            "name": "AtCoder",
+            "vjudge": true,
+            "userCreatable": false,
+            "searchable": true
+        },
+        "UVA": {
+            "id": "UVA",
+            "type": "UVA",
+            "name": "UVA",
+            "vjudge": true,
+            "userCreatable": false,
+            "searchable": true
+        }
+    },
+    "messageModeTypes": [
+        {
+            "id": 0,
+            "type": "Admin",
+            "name": "仅限管理员"
+        },
+        {
+            "id": 1,
+            "type": "Following",
+            "name": "关注的人与管理员"
+        },
+        {
+            "id": 2,
+            "type": "Anyone",
+            "name": "所有人(拉黑的用户除外)"
+        }
+    ],
+    "TeamJoinRequestStatusTypes": [
+        {
+            "id": 0,
+            "type": "PendingReview",
+            "name": "等待审核"
+        },
+        {
+            "id": 1,
+            "type": "PassedReview",
+            "name": "已通过"
+        },
+        {
+            "id": 2,
+            "type": "FailedReview",
+            "name": "已拒绝"
+        },
+        {
+            "id": 3,
+            "type": "Canceled",
+            "name": "已取消"
+        }
+    ],
+    "problemFlagTypes": {
+        "-1": {
+            "id": -1,
+            "type": "Deleted",
+            "name": "删除"
+        },
+        "0": {
+            "id": 0,
+            "type": "Hidden",
+            "name": "隐藏"
+        },
+        "2": {
+            "id": 2,
+            "type": "TeamAccessEnabled",
+            "name": "仅团队可见"
+        },
+        "5": {
+            "id": 5,
+            "type": "PublicAccessEnabled",
+            "name": "公众可见"
+        },
+        "6": {
+            "id": 6,
+            "type": "ContestMode",
+            "name": "比赛赛题"
+        }
+    },
+    "contestInvitationCodeTypes": {
+        "1": {
+            "id": 1,
+            "type": "FixedInvitationCode",
+            "name": "固定邀请码"
+        },
+        "2": {
+            "id": 2,
+            "type": "GeneratedInvitationCode",
+            "name": "生成验证码"
+        }
+    },
+    "trainingTypes": {
+        "0": {
+            "id": 0,
+            "type": "Hidden",
+            "name": "隐藏题单",
+            "public": false,
+            "select": false,
+            "scope": "hidden",
+            "userCreatable": false,
+            "color": "grey-5"
+        },
+        "1": {
+            "id": 1,
+            "type": "Official",
+            "name": "官方题单",
+            "public": true,
+            "select": true,
+            "scope": "global",
+            "userCreatable": false,
+            "color": "red-3"
+        },
+        "2": {
+            "id": 2,
+            "type": "TeamPrivate",
+            "name": "团队私有",
+            "public": false,
+            "select": false,
+            "scope": "team",
+            "userCreatable": true,
+            "color": "green-4"
+        },
+        "7": {
+            "id": 7,
+            "type": "TeamPublic",
+            "name": "团队公开",
+            "public": true,
+            "select": false,
+            "scope": "team",
+            "userCreatable": true,
+            "color": "green-4"
+        },
+        "3": {
+            "id": 3,
+            "type": "TeamSelect",
+            "name": "团队精选",
+            "public": true,
+            "select": true,
+            "scope": "team",
+            "userCreatable": false,
+            "color": "green-4"
+        },
+        "4": {
+            "id": 4,
+            "type": "TeamHomework",
+            "name": "团队作业",
+            "public": false,
+            "select": false,
+            "scope": "team",
+            "userCreatable": true,
+            "color": "green-4"
+        },
+        "5": {
+            "id": 5,
+            "type": "UserPrivate",
+            "name": "个人私有",
+            "public": false,
+            "select": false,
+            "scope": "user",
+            "userCreatable": true,
+            "color": "lapis-3"
+        },
+        "8": {
+            "id": 8,
+            "type": "UserPublic",
+            "name": "个人公开",
+            "public": true,
+            "select": false,
+            "scope": "user",
+            "userCreatable": true,
+            "color": "lapis-3"
+        },
+        "6": {
+            "id": 6,
+            "type": "UserSelect",
+            "name": "个人精选",
+            "public": true,
+            "select": true,
+            "scope": "user",
+            "userCreatable": false,
+            "color": "lapis-3"
+        }
+    },
+    "teamTypes": {
+        "0": {
+            "id": 0,
+            "displayName": "已停用"
+        },
+        "2": {
+            "id": 2,
+            "displayName": "普通"
+        },
+        "3": {
+            "id": 3,
+            "displayName": "官方"
+        }
+    },
+    "notificationTypes": {
+        "1": {
+            "id": 1,
+            "type": "At",
+            "name": "@我的"
+        },
+        "2": {
+            "id": 2,
+            "type": "Reply",
+            "name": "回复"
+        },
+        "3": {
+            "id": 3,
+            "type": "Others",
+            "name": "系统通知"
+        }
+    },
+    "imageHostingWatermarkTypes": [
+        {
+            "id": 0,
+            "name": "无水印"
+        },
+        {
+            "id": 1,
+            "name": "Logo"
+        },
+        {
+            "id": 2,
+            "name": "Logo@昵称"
+        }
+    ],
+    "teamMemberTypes": {
+        "1": {
+            "id": 1,
+            "type": "Member",
+            "name": "成员"
+        },
+        "2": {
+            "id": 2,
+            "type": "Administrator",
+            "name": "管理员"
+        },
+        "3": {
+            "id": 3,
+            "type": "Master",
+            "name": "所有者"
+        }
+    },
+    "teamMemberPermissionTypes": {
+        "1": {
+            "id": 1,
+            "type": "TrainingManagementMask",
+            "name": "题单管理"
+        },
+        "2": {
+            "id": 2,
+            "type": "ProblemManagementMask",
+            "name": "题目管理"
+        },
+        "4": {
+            "id": 4,
+            "type": "ContestManagementMask",
+            "name": "比赛管理"
+        },
+        "8": {
+            "id": 8,
+            "type": "DiscussManagementMask",
+            "name": "讨论管理"
+        },
+        "16": {
+            "id": 16,
+            "type": "MemberManagementMask",
+            "name": "成员管理"
+        },
+        "32": {
+            "id": 32,
+            "type": "InfoManagementMask",
+            "name": "简介管理"
+        },
+        "64": {
+            "id": 64,
+            "type": "FileManagementMask",
+            "name": "文件管理"
+        }
+    },
+    "teamJoinPermissionTypes": [
+        {
+            "id": 0,
+            "type": "NoReview",
+            "name": "加入无需审核"
+        },
+        {
+            "id": 1,
+            "type": "RequireReview",
+            "name": "加入需要审核"
+        },
+        {
+            "id": 2,
+            "type": "Disallow",
+            "name": "不允许加入"
+        }
+    ],
+    "userPrizeShowLevelType": [
+        {
+            "id": 0,
+            "type": "Hidden",
+            "name": "隐藏"
+        },
+        {
+            "id": 1,
+            "type": "WithoutYearAndScore",
+            "name": "不含年份和分数"
+        },
+        {
+            "id": 2,
+            "type": "WithoutScore",
+            "name": "不含分数"
+        },
+        {
+            "id": 3,
+            "type": "ShowAll",
+            "name": "展示"
+        }
+    ]
+}
