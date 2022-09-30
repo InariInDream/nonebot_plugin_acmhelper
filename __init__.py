@@ -36,9 +36,9 @@ async def rd_problem_handle(args: Message = CommandArg()):
         f = random.choice(['luogu', 'cf'])
         try:
             if f == 'luogu':
-                msg = msg_manager(luogu.luogu_random_button(data))
+                msg = await msg_manager(await luogu.luogu_random_button(data))
             elif f == 'cf':
-                msg = msg_manager(cf.random_problem_set(data))
+                msg = await msg_manager(await cf.random_problem_set(data))
             await rd_problem.finish(msg)
         except httpx.ConnectTimeout as e:
             logger.error(e)
