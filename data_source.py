@@ -238,13 +238,12 @@ class Codeforces:
                                 res[user]["rated_solved"] += 1
                         elif pass_time != now_time:
                             break
-                        else:
-                            try:
-                                res[user]['average_rating'] = res[user]['rating'] / res[user]['rated_solved']
-                            except ZeroDivisionError:
-                                res[user]['average_rating'] = 0
-                            except KeyError:
-                                pass
+                try:
+                    res[user]['average_rating'] = res[user]['rating'] / res[user]['rated_solved']
+                except ZeroDivisionError:
+                    res[user]['average_rating'] = 0
+                except KeyError:
+                    pass
         sorted_res = sorted(res.items(), key=lambda x: x[1]['solved'], reverse=True)
         index = 1
         for i in sorted_res:
