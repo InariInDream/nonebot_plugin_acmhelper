@@ -3,8 +3,10 @@ import urllib
 import httpx
 import random
 import json
+import datetime
 from bs4 import BeautifulSoup as bs
 from nonebot import logger
+from pathlib import Path
 from .data_struct import MsgData
 
 headers = {
@@ -21,6 +23,8 @@ headers = {
             "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"
         }
 
+cwd = Path.cwd()
+
 
 async def msg_manager(msg_data):
     msg = ''
@@ -32,7 +36,6 @@ async def msg_manager(msg_data):
     msg += "\n"
     msg += f"链接：{ msg_data.href}\n"
     msg += f"题目来源：{ msg_data.platform}"
-
     return msg
 
 
@@ -118,31 +121,141 @@ luogu = Luogu()
 class Codeforces:
     def __init__(self):
         self.data = MsgData()
+        self.cwd = Path.cwd()
+        self.config_folder_make()
+        self.rank_list = []
 
-    async def random_problem_set(self, data: MsgData):
+
+    async def random_problem_set(self, data: MsgData, cmd=None):
         """
         随机获取Codeforces题目
         :return:
         """
-        url = "https://codeforces.com/api/problemset.problems"
-        try:
-            async with httpx.AsyncClient() as client:
-                r = await client.get(url)
-        except Exception as e:
-            logger.error(e)
-            pass
+        if cmd is None:
+            url = "https://codeforces.com/api/problemset.problems"
+            try:
+                async with httpx.AsyncClient() as client:
+                    r = await client.get(url)
+            except Exception as e:
+                logger.error(e)
+                pass
+            else:
+                j = r.json()
+                if j["status"] == "OK":
+                    problem_list = j["result"]["problems"]
+                    problem = random.choice(problem_list)
+                    data.title = problem["name"]
+                    data.href = "https://codeforces.com/contest/" + str(problem["contestId"]) + "/" + "problem/" + problem["index"]
+                    data.platform = "Codeforces"
+                    data.difficulty = problem["rating"]
+                    data.tags = problem["tags"]
+                    self.data = data
+                    return self.data
         else:
-            j = r.json()
-            if j["status"] == "OK":
-                problem_list = j["result"]["problems"]
-                problem = random.choice(problem_list)
-                data.title = problem["name"]
-                data.href = "https://codeforces.com/contest/" + str(problem["contestId"]) + "/" + "problem/" + problem["index"]
-                data.platform = "Codeforces"
-                data.difficulty = problem["rating"]
-                data.tags = problem["tags"]
-                self.data = data
-                return self.data
+            url = f"https://codeforces.com/api/problemset.problems?tags={cmd}"
+            try:
+                async with httpx.AsyncClient() as client:
+                    r = await client.get(url)
+            except Exception as e:
+                logger.error(e)
+                pass
+            else:
+                j = r.json()
+                if j["status"] == "OK":
+                    problem_list = j["result"]["problems"]
+                    problem = random.choice(problem_list)
+                    data.title = problem["name"]
+                    data.href = "https://codeforces.com/contest/" + str(problem["contestId"]) + "/" + "problem/" + problem["index"]
+                    data.platform = "Codeforces"
+                    data.difficulty = problem["rating"]
+                    data.tags = problem["tags"]
+                    self.data = data
+                    return self.data
+
+    def config_folder_make(self):
+        """
+        创建配置文件夹
+        :return:
+        """
+        if not (self.cwd / 'data' / 'acm_helper').exists():
+            (self.cwd / 'data' / 'acm_helper').mkdir()
+        if not (self.cwd / 'data' / 'acm_helper' / 'config.json').exists():
+            with open(self.cwd / 'data' / 'acm_helper' / 'config.json', 'w', encoding='utf-8') as f:
+                json.dump({"rank_list": []}, f, ensure_ascii=False, indent=4)
+
+    def get_rank_list(self):
+        """
+        获取配置文件中的rank_list
+        :return:
+        """
+        with open(self.cwd / 'data' / 'acm_helper' / 'config.json', 'r', encoding='utf-8') as f:
+            self.rank_list = json.load(f)["rank_list"]
+
+    def add_rank_list(self, handle: str):
+        """
+        添加rank_list
+        :param handle:
+        :return:
+        """
+        self.get_rank_list()
+        if handle not in self.rank_list:
+            self.rank_list.append(handle)
+            with open(self.cwd / 'data' / 'acm_helper' / 'config.json', 'w', encoding='utf-8') as f:
+                json.dump({"rank_list": self.rank_list}, f, ensure_ascii=False, indent=4)
+
+    async def rank(self):
+        """
+        获取Codeforces排名
+        :return:
+        """
+        res = {}
+        msg = ""
+        self.get_rank_list()
+        for user in self.rank_list:
+            url = f"https://codeforces.com/api/user.status?handle={user}&from=1&count=100"
+            try:
+                async with httpx.AsyncClient() as client:
+                    r = await client.get(url)
+            except Exception as e:
+                logger.error(e)
+                return "获取失败,请稍后再试"
+            else:
+                j = r.json()
+                if j["status"] == "OK":
+                    res[user] = {"solved": 0,
+                                 "rating": 0,
+                                 "rated_solved": 0,
+                                 'average_rating': 0}
+                    problem_list = j["result"]
+                    for p in problem_list:
+                        pass_time = str(datetime.datetime.fromtimestamp(p["creationTimeSeconds"]))[0:10]
+                        now_time = str(datetime.datetime.now())[0:10]
+                        if pass_time == now_time and p["verdict"] == "OK":
+
+                            res[user]["solved"] += 1
+                            if p['problem']['rating'] is not None:
+                                res[user]["rating"] += p['problem']['rating']
+                                res[user]["rated_solved"] += 1
+                        elif pass_time != now_time:
+                            break
+                        else:
+                            try:
+                                res[user]['average_rating'] = res[user]['rating'] / res[user]['rated_solved']
+                            except ZeroDivisionError:
+                                res[user]['average_rating'] = 0
+                            except KeyError:
+                                pass
+        sorted_res = sorted(res.items(), key=lambda x: x[1]['solved'], reverse=True)
+        index = 1
+        for i in sorted_res:
+            if i[1]['solved'] != 0:
+                msg += f"{index}：{i[0]}: solved {i[1]['solved']} 题, 平均难度 {i[1]['average_rating']}\n"
+                index += 1
+        if msg == "":
+            msg = "今天还没有人AC题哦"
+        else:
+            msg = "今日AC题排名:\n" + msg
+        return msg
 
 
 cf = Codeforces()
