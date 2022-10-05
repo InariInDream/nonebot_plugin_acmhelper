@@ -22,9 +22,20 @@ rank = on_command("cf排行", permission=GROUP, priority=5, block=False)
 
 rank_add = on_command("rank添加", permission=GROUP, priority=5, block=False)
 
+help_list = on_command("acmhelp", permission=GROUP, priority=5, block=False)
+
 
 cf_tags = ["binary search", "bitmasks", "brute force", "chinese remainder theorem", "combinatorics", "constructive algorithms", "data structures", "dfs and similar", "divide and conquer", "dp", "dsu", "expression parsing", "fft", "flows", "games", "geometry", "graph matchings", "graphs", "greedy", "hashing", "implementation", "math", "matrices", "meet-in-the-middle", "number theory", "probabilities", "schedules", "shortest paths", "sortings", "string suffix structures", "strings", "ternary search", "trees", "two pointers"]
 
+notice_group = [796613975]
+
+
+@scheduler.scheduled_job("cron", hour=23, minute=54)
+async def _():
+    bot = get_bot()
+    msg = await cf.rank()
+    for group in notice_group:
+        await bot.send_group_msg(group_id=int(group), message=msg)
 
 @rd_problem.handle()
 async def rd_problem_handle(args: Message = CommandArg()):
@@ -71,3 +82,13 @@ async def rank_add_handle(args: Message = CommandArg()):
         await rank_add.finish("添加成功捏")
     else:
         await rank_add.finish("添加失败捏")
+
+
+@help_list.handle()
+async def help_list_handle():
+    msg = "ACM助手使用说明\n\n"
+    msg += "1. 来点题目:从洛谷和cf随机抽题\n"
+    msg += "2. 来点[tag](暂时只支持cf内的tags)\n"
+    msg += "3. cf排行:查看每日cf刷题排行\n"
+    msg += "4. rank添加 [cfid]:在cf排行里加入指定id\n"
+    await help_list.finish(msg)
