@@ -1,3 +1,4 @@
+import asyncio
 import re
 import urllib
 import httpx
@@ -220,18 +221,26 @@ class Codeforces:
                 logger.error(e)
                 return "获取失败,请稍后再试"
             else:
-                j = r.json()
+                try:
+                    j = r.json()
+                except json.decoder.JSONDecodeError:
+                    logger.error("请求过快")
+                    await asyncio.sleep(0.5)  # 过0.5秒再次请求
+                    async with httpx.AsyncClient() as client:
+                        r = await client.get(url)
+                    j = r.json()
                 if j["status"] == "OK":
                     res[user] = {"solved": 0,
                                  "rating": 0,
                                  "rated_solved": 0,
                                  'average_rating': 0}
                     problem_list = j["result"]
+                    sol_list = set()
                     for p in problem_list:
                         pass_time = str(datetime.datetime.fromtimestamp(p["creationTimeSeconds"]))[0:10]
                         now_time = str(datetime.datetime.now())[0:10]
-                        if pass_time == now_time and p["verdict"] == "OK":
-
+                        if pass_time == now_time and p["verdict"] == "OK" and p["problem"]["name"] not in sol_list:
+                            sol_list.add(p["problem"]["name"])
                             res[user]["solved"] += 1
                             if p['problem']['rating'] is not None:
                                 res[user]["rating"] += p['problem']['rating']
@@ -239,12 +248,12 @@ class Codeforces:
                         elif pass_time != now_time:
                             break
                 try:
-                    res[user]['average_rating'] = res[user]['rating'] / res[user]['rated_solved']
+                    res[user]['average_rating'] = res[user]['rating'] // res[user]['rated_solved']
                 except ZeroDivisionError:
                     res[user]['average_rating'] = 0
                 except KeyError:
                     pass
-        sorted_res = sorted(res.items(), key=lambda x: x[1]['solved'], reverse=True)
+        sorted_res = sorted(res.items(), key=lambda x: (x[1]['solved'], x[1]['average_rating']), reverse=True)
         index = 1
         for i in sorted_res:
             if i[1]['solved'] != 0:
