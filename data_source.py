@@ -242,9 +242,11 @@ class Codeforces:
                         if pass_time == now_time and p["verdict"] == "OK" and p["problem"]["name"] not in sol_list:
                             sol_list.add(p["problem"]["name"])
                             res[user]["solved"] += 1
-                            if p['problem']['rating'] is not None:
+                            try:
                                 res[user]["rating"] += p['problem']['rating']
                                 res[user]["rated_solved"] += 1
+                            except KeyError:
+                                pass
                         elif pass_time != now_time:
                             break
                 try:
