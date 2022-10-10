@@ -1,5 +1,6 @@
 import asyncio
 import re
+import time
 import urllib
 import httpx
 import random
@@ -204,7 +205,7 @@ class Codeforces:
             with open(self.cwd / 'data' / 'acm_helper' / 'config.json', 'w', encoding='utf-8') as f:
                 json.dump({"rank_list": self.rank_list}, f, ensure_ascii=False, indent=4)
 
-    async def rank(self):
+    async def rank(self, cmd):
         """
         获取Codeforces排名
         :return:
@@ -213,7 +214,10 @@ class Codeforces:
         msg = ""
         self.get_rank_list()
         for user in self.rank_list:
-            url = f"https://codeforces.com/api/user.status?handle={user}&from=1&count=100"
+            if cmd == "day":
+                url = f"https://codeforces.com/api/user.status?handle={user}&from=1&count=100"
+            else:
+                url = f"https://codeforces.com/api/user.status?handle={user}&from=1&count=500"
             try:
                 async with httpx.AsyncClient() as client:
                     r = await client.get(url)
@@ -236,19 +240,34 @@ class Codeforces:
                                  'average_rating': 0}
                     problem_list = j["result"]
                     sol_list = set()
-                    for p in problem_list:
-                        pass_time = str(datetime.datetime.fromtimestamp(p["creationTimeSeconds"]))[0:10]
-                        now_time = str(datetime.datetime.now())[0:10]
-                        if pass_time == now_time and p["verdict"] == "OK" and p["problem"]["name"] not in sol_list:
-                            sol_list.add(p["problem"]["name"])
-                            res[user]["solved"] += 1
-                            try:
-                                res[user]["rating"] += p['problem']['rating']
-                                res[user]["rated_solved"] += 1
-                            except KeyError:
-                                pass
-                        elif pass_time != now_time:
-                            break
+                    if cmd == "day":
+                        for p in problem_list:
+                            pass_time = str(datetime.datetime.fromtimestamp(p["creationTimeSeconds"]))[0:10]
+                            now_time = str(datetime.datetime.now())[0:10]
+                            if pass_time == now_time and p["verdict"] == "OK" and p["problem"]["name"] not in sol_list:
+                                sol_list.add(p["problem"]["name"])
+                                res[user]["solved"] += 1
+                                try:
+                                    res[user]["rating"] += p['problem']['rating']
+                                    res[user]["rated_solved"] += 1
+                                except KeyError:
+                                    pass
+                            elif pass_time != now_time:
+                                break
+                    else:
+                        now_time_stamp = int(time.time())
+                        for p in problem_list:
+                            pass_time_stamp = p["creationTimeSeconds"]
+                            if now_time_stamp - pass_time_stamp <= 24 * 3600 * 7 and p["verdict"] == "OK" and p["problem"]["name"] not in sol_list:
+                                sol_list.add(p["problem"]["name"])
+                                res[user]["solved"] += 1
+                                try:
+                                    res[user]["rating"] += p['problem']['rating']
+                                    res[user]["rated_solved"] += 1
+                                except KeyError:
+                                    pass
+                            elif now_time_stamp - pass_time_stamp > 24 * 3600 * 7:
+                                break
                 try:
                     res[user]['average_rating'] = res[user]['rating'] // res[user]['rated_solved']
                 except ZeroDivisionError:
@@ -261,11 +280,18 @@ class Codeforces:
             if i[1]['solved'] != 0:
                 msg += f"{index}：{i[0]}: solved {i[1]['solved']} 题, 平均难度 {i[1]['average_rating']}\n"
                 index += 1
-        if msg == "":
-            msg = "今天还没有人AC题哦"
+        if cmd == "day":
+            if msg == "":
+                msg = "今天还没有人AC题哦"
+            else:
+                msg = "今日AC题排名:\n" + msg
+            return msg
         else:
-            msg = "今日AC题排名:\n" + msg
-        return msg
+            if msg == "":
+                msg = "本周还没有人AC题哦"
+            else:
+                msg = "本周AC题排名:\n" + msg
+            return msg
 
 
 cf = Codeforces()
