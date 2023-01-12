@@ -219,7 +219,10 @@ class Codeforces:
             else:
                 url = f"https://codeforces.com/api/user.status?handle={user}&from=1&count=500"
             try:
-                async with httpx.AsyncClient() as client:
+                async with httpx.AsyncClient(proxies={
+                    "http://": "http://127.0.0.1:7890",
+                    "https://": "https://127.0.0.1:7890"
+                }) as client:
                     r = await client.get(url)
             except Exception as e:
                 logger.error(e)
@@ -230,7 +233,10 @@ class Codeforces:
                 except json.decoder.JSONDecodeError:
                     logger.error("请求过快")
                     await asyncio.sleep(0.5)  # 过0.5秒再次请求
-                    async with httpx.AsyncClient() as client:
+                    async with httpx.AsyncClient(proxies={
+                    "http://": "http://127.0.0.1:7890",
+                    "https://": "https://127.0.0.1:7890"
+                }) as client:
                         r = await client.get(url)
                     j = r.json()
                 if j["status"] == "OK":
