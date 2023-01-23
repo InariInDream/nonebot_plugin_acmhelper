@@ -128,6 +128,7 @@ class Codeforces:
         self.cwd = Path.cwd()
         self.config_folder_make()
         self.rank_list = []
+        self.nick_name = {}
 
 
     async def random_problem_set(self, data: MsgData, cmd=None):
@@ -194,18 +195,23 @@ class Codeforces:
         """
         with open(self.cwd / 'data' / 'acm_helper' / 'config.json', 'r', encoding='utf-8') as f:
             self.rank_list = json.load(f)["rank_list"]
+        with open(self.cwd / 'data' / 'acm_helper' / 'config.json', 'r', encoding='utf-8') as f:
+            self.nick_name = json.load(f)["nick_name"]
 
-    def add_rank_list(self, handle: str):
+
+    def add_rank_list(self, handle: str, nickname):
         """
         添加rank_list
+        :param nickname:
         :param handle:
         :return:
         """
         self.get_rank_list()
         if handle not in self.rank_list:
             self.rank_list.append(handle)
+            self.nick_name[handle] = nickname
             with open(self.cwd / 'data' / 'acm_helper' / 'config.json', 'w', encoding='utf-8') as f:
-                json.dump({"rank_list": self.rank_list}, f, ensure_ascii=False, indent=4)
+                json.dump({"rank_list": self.rank_list, "nick_name": self.nick_name}, f, ensure_ascii=False, indent=4)
 
     async def rank(self, cmd):
         """
@@ -221,13 +227,16 @@ class Codeforces:
             else:
                 url = f"https://codeforces.com/api/user.status?handle={user}&from=1&count=500"
             try:
-                async with httpx.AsyncClient(proxies={
-                    "http://": "http://127.0.0.1:7890",
-                    "https://": "https://127.0.0.1:7890"
-                }) as client:
-                    r = await client.get(url, timeout=10)
-            except Exception as e:
-                logger.error(e)
+                try:
+                    async with httpx.AsyncClient(proxies={
+                        "http://": "http://127.0.0.1:7890",
+                        "https://": "https://127.0.0.1:7890"
+                    }) as client:
+                        r = await client.get(url, timeout=20)
+                except:
+                    async with httpx.AsyncClient() as client:
+                        r = await client.get(url, timeout=20)
+            except httpx.ConnectTimeout:
                 return "获取失败,请稍后再试"
             else:
                 try:
@@ -235,11 +244,15 @@ class Codeforces:
                 except json.decoder.JSONDecodeError:
                     logger.error("请求过快")
                     await asyncio.sleep(0.5)  # 过0.5秒再次请求
-                    async with httpx.AsyncClient(proxies={
-                    "http://": "http://127.0.0.1:7890",
-                    "https://": "https://127.0.0.1:7890"
-                }) as client:
-                        r = await client.get(url, timeout=10)
+                    try:
+                        async with httpx.AsyncClient(proxies={
+                        "http://": "http://127.0.0.1:7890",
+                        "https://": "https://127.0.0.1:7890"
+                    }) as client:
+                            r = await client.get(url, timeout=20)
+                    except:
+                        async with httpx.AsyncClient() as client:
+                            r = await client.get(url, timeout=20)
                     j = r.json()
                 if j["status"] == "OK":
                     res[user] = {"solved": 0,
@@ -283,19 +296,19 @@ class Codeforces:
                 except KeyError:
                     pass
         sorted_res = sorted(res.items(), key=lambda x: (x[1]['solved'], x[1]['average_rating']), reverse=True)
-        index = 1
-        for i in sorted_res:
-            if i[1]['solved'] != 0:
-                msg += f"{index}：{i[0]}: solved {i[1]['solved']} 题, 平均难度 {i[1]['average_rating']}\n"
-                index += 1
+        # index = 1
+        # for i in sorted_res:
+        #     if i[1]['solved'] != 0:
+        #         msg += f"{index}：{i[0]}: solved {i[1]['solved']} 题, 平均难度 {i[1]['average_rating']}\n"
+        #         index += 1
         if cmd == "day":
-            if msg == "":
+            if sorted_res[0][1]['solved'] == 0:
                 msg = "今天还没有人AC题哦"
             else:
                 msg = await self.rank2img(sorted_res)
             return msg
         else:
-            if msg == "":
+            if sorted_res[0][1]['solved'] == 0:
                 msg = "本周还没有人AC题哦"
             else:
                 # msg = "本周AC题排名:\n" + msg
@@ -305,7 +318,7 @@ class Codeforces:
 
     async def rank2img(self, res: list):
         # Create a drawing context
-        image = Image.new('RGB', (800, 600), (255, 255, 255))
+        image = Image.new('RGB', (900, 1600), (255, 255, 255))
         draw = ImageDraw.Draw(image)
 
         # Define font
@@ -318,15 +331,15 @@ class Codeforces:
         # Draw table
         x1 = 10
         y1 = 10
-        x2 = 800
+        x2 = 900
         y2 = 50
 
         # Draw table title
         draw.rectangle((x1, y1, x2, y2), fill=(200, 200, 200))
         draw.text((x1 + 20, y1 + 10), "序号", font=zh_font, fill=color1)
-        draw.text((x1 + 120, y1 + 10), "昵称", font=zh_font, fill=color1)
-        draw.text((x1 + 420, y1 + 10), "过题数", font=zh_font, fill=color1)
-        draw.text((x1 + 620, y1 + 10), "平均难度", font=zh_font, fill=color1)
+        draw.text((x1 + 220, y1 + 10), "昵称", font=zh_font, fill=color1)
+        draw.text((x1 + 520, y1 + 10), "过题数", font=zh_font, fill=color1)
+        draw.text((x1 + 720, y1 + 10), "平均难度", font=zh_font, fill=color1)
 
         # Draw table content
         index = 1
@@ -334,25 +347,70 @@ class Codeforces:
         for i in res:
             if i[1]['solved'] != 0:
                 draw.rectangle((x1, y1 + height, x2, y1 + height + 50), fill=(255, 255, 255))
-                draw.text((x1 + 20, y1 + height + 10), str(index), font=font, fill=color1)
-                draw.text((x1 + 120, y1 + height + 10), i[0], font=font, fill=await self.get_color(await self.get_rating(i[0])))
-                draw.text((x1 + 420, y1 + height + 10), str(i[1]['solved']), font=font, fill=color1)
-                draw.text((x1 + 620, y1 + height + 10), str(i[1]['average_rating']), font=font, fill=await self.get_color(i[1]['average_rating']))
+                draw.text((x1 + 20, y1 + height + 10), f"{str(index)} ({self.nick_name[i[0]]})", font=zh_font, fill=color1)
+                # logger.info(i[0])
+                draw.text((x1 + 220, y1 + height + 10), i[0], font=font, fill=await self.get_color(int(await self.get_rating(i[0]))))
+                draw.text((x1 + 520, y1 + height + 10), str(i[1]['solved']), font=font, fill=color1)
+                draw.text((x1 + 720, y1 + height + 10), str(i[1]['average_rating']), font=font, fill=await self.get_color(i[1]['average_rating']))
                 index += 1
                 height += 50
+                draw.line((x1, y1 + height, x2, y1 + height), fill=(0, 0, 0), width=5)
 
         # Create image with calculated height
-        image = image.crop((0, 0, 800, height + 50))
+        image = image.crop((0, 0, 900, height + 50))
+        return image
+
+    async def rating_rank(self):
+        self.get_rank_list()
+        res = {}
+        for user in self.rank_list:
+            rating = await self.get_rating(user)
+            res[user] = rating
+        sorted_res = sorted(res.items(), key=lambda x: x[1], reverse=True)
+
+        image = Image.new('RGB', (700, 2600), (255, 255, 255))
+        draw = ImageDraw.Draw(image)
+        font = ImageFont.truetype("arial.ttf", 30)
+        zh_font = ImageFont.truetype("simhei.ttf", 30)
+        color1 = (0, 0, 0)
+        # Draw table
+        x1 = 10
+        y1 = 10
+        x2 = 700
+        y2 = 50
+
+        # Draw table title
+        draw.rectangle((x1, y1, x2, y2), fill=(200, 200, 200))
+        draw.text((x1 + 20, y1 + 10), "序号", font=zh_font, fill=color1)
+        draw.text((x1 + 220, y1 + 10), "昵称", font=zh_font, fill=color1)
+        draw.text((x1 + 520, y1 + 10), "Rating", font=font, fill=color1)
+
+        index = 1
+        height = 50  # title row height
+        for i in sorted_res:
+            draw.rectangle((x1, y1 + height, x2, y1 + height + 50), fill=(255, 255, 255))
+            draw.text((x1 + 20, y1 + height + 10), f"{str(index)} ({self.nick_name[i[0]]})", font=zh_font, fill=color1)
+            draw.text((x1 + 220, y1 + height + 10), i[0], font=font, fill=await self.get_color(i[1]))
+            draw.text((x1 + 520, y1 + height + 10), str(i[1]), font=font, fill=await self.get_color(i[1]))
+            index += 1
+            height += 50
+            draw.line((x1, y1 + height, x2, y1 + height), fill=(0, 0, 0), width=5)
+
+        image = image.crop((0, 0, 700, height + 50))
         return image
 
     async def get_rating(self, username):
         url = f"https://codeforces.com/api/user.info?handles={username}"
         try:
-            async with httpx.AsyncClient(proxies={
-                "http://": "http://127.0.0.1/7890",
-                "https://": "http://127.0.0.1/7890"
-            }) as client:
-                r = await client.get(url, timeout=10)
+            try:
+                async with httpx.AsyncClient(proxies={
+                    "http://": "http://127.0.0.1/7890",
+                    "https://": "http://127.0.0.1/7890"
+                }) as client:
+                    r = await client.get(url, timeout=20)
+            except:
+                async with httpx.AsyncClient() as client:
+                    r = await client.get(url, timeout=20)
         except Exception as e:
             logger.error(e)
             return "Error"
@@ -360,7 +418,11 @@ class Codeforces:
         if j['status'] == "OK":
             res = j['result']
             res = res[0]
-            return res['rating']
+            # logger.info(res)
+            if 'rating' in res:
+                return res['rating']
+            else:
+                return 0
 
     async def get_color(self, rating):
         if rating == 0:

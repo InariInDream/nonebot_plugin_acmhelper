@@ -27,6 +27,8 @@ help_list = on_command("acmhelp", permission=GROUP, priority=5, block=False)
 
 week_rank = on_command("cf周榜", permission=GROUP, priority=5, block=False)
 
+rating_rank = on_command("rating", permission=GROUP, priority=5, block=False)
+
 
 cf_tags = ["binary search", "bitmasks", "brute force", "chinese remainder theorem", "combinatorics", "constructive algorithms", "data structures", "dfs and similar", "divide and conquer", "dp", "dsu", "expression parsing", "fft", "flows", "games", "geometry", "graph matchings", "graphs", "greedy", "hashing", "implementation", "math", "matrices", "meet-in-the-middle", "number theory", "probabilities", "schedules", "shortest paths", "sortings", "string suffix structures", "strings", "ternary search", "trees", "two pointers"]
 
@@ -82,12 +84,17 @@ async def rank_handle():
 
 @rank_add.handle()
 async def rank_add_handle(args: Message = CommandArg()):
-    cmd = args.extract_plain_text()
-    if len(cmd) > 0:
-        cf.add_rank_list(cmd)
-        await rank_add.finish("添加成功捏")
+    cmd = args.extract_plain_text().split(" ")
+    if len(cmd) < 2:
+        await rank_add.finish("该命令需要两个参数(handle + 名字，用空格分隔)")
     else:
-        await rank_add.finish("添加失败捏")
+        cf.add_rank_list(cmd[0], cmd[1])
+        await rank_add.finish("添加成功捏")
+    # if len(cmd) > 0:
+    #     cf.add_rank_list(cmd)
+    #     await rank_add.finish("添加成功捏")
+    # else:
+    #     await rank_add.finish("添加失败捏")
 
 
 @week_rank.handle()
@@ -100,12 +107,24 @@ async def week_rank_handle():
         await week_rank.finish(msg)
 
 
+@rating_rank.handle()
+async def rating_rank_handle():
+    await rating_rank.send("查询中...请稍等几秒")
+    msg = await cf.rating_rank()
+    if type(msg) is not str:
+        await rating_rank.finish(MessageSegment.image('base64://' + img2b64(msg)))
+    else:
+        await rating_rank.finish(msg)
+
+
 @help_list.handle()
 async def help_list_handle():
     msg = "ACM助手使用说明\n\n"
     msg += "1. 来点题目:从洛谷和cf随机抽题\n"
     msg += "2. 来点[tag](暂时只支持cf内的tags)\n"
     msg += "3. cf排行:查看每日cf刷题排行\n"
-    msg += "4. rank添加 [cfid]:在cf排行里加入指定id\n"
+    msg += "4. rank添加 [cfid, name]:在cf排行里加入指定id和名字\n"
     msg += "5. cf周榜:查看cf周榜\n"
+    msg += "6. rating:查看cf rating排行\n"
+    msg += "7. cfrate [cfid]:查看指定id的rating\n"
     await help_list.finish(msg)
