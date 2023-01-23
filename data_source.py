@@ -10,6 +10,8 @@ from bs4 import BeautifulSoup as bs
 from nonebot import logger
 from pathlib import Path
 from .data_struct import MsgData
+from PIL import Image, ImageDraw, ImageFont
+
 
 headers = {
             "authority": "www.luogu.com.cn",
@@ -223,7 +225,7 @@ class Codeforces:
                     "http://": "http://127.0.0.1:7890",
                     "https://": "https://127.0.0.1:7890"
                 }) as client:
-                    r = await client.get(url)
+                    r = await client.get(url, timeout=10)
             except Exception as e:
                 logger.error(e)
                 return "获取失败,请稍后再试"
@@ -237,7 +239,7 @@ class Codeforces:
                     "http://": "http://127.0.0.1:7890",
                     "https://": "https://127.0.0.1:7890"
                 }) as client:
-                        r = await client.get(url)
+                        r = await client.get(url, timeout=10)
                     j = r.json()
                 if j["status"] == "OK":
                     res[user] = {"solved": 0,
@@ -290,14 +292,93 @@ class Codeforces:
             if msg == "":
                 msg = "今天还没有人AC题哦"
             else:
-                msg = "今日AC题排名:\n" + msg
+                msg = await self.rank2img(sorted_res)
             return msg
         else:
             if msg == "":
                 msg = "本周还没有人AC题哦"
             else:
-                msg = "本周AC题排名:\n" + msg
+                # msg = "本周AC题排名:\n" + msg
+                msg = await self.rank2img(sorted_res)
+
             return msg
+
+    async def rank2img(self, res: list):
+        # Create a drawing context
+        image = Image.new('RGB', (800, 600), (255, 255, 255))
+        draw = ImageDraw.Draw(image)
+
+        # Define font
+        font = ImageFont.truetype("arial.ttf", 30)
+        zh_font = ImageFont.truetype("simhei.ttf", 30)
+
+        # Define font color
+        color1 = (0, 0, 0)
+
+        # Draw table
+        x1 = 10
+        y1 = 10
+        x2 = 800
+        y2 = 50
+
+        # Draw table title
+        draw.rectangle((x1, y1, x2, y2), fill=(200, 200, 200))
+        draw.text((x1 + 20, y1 + 10), "序号", font=zh_font, fill=color1)
+        draw.text((x1 + 120, y1 + 10), "昵称", font=zh_font, fill=color1)
+        draw.text((x1 + 420, y1 + 10), "过题数", font=zh_font, fill=color1)
+        draw.text((x1 + 620, y1 + 10), "平均难度", font=zh_font, fill=color1)
+
+        # Draw table content
+        index = 1
+        height = 50  # title row height
+        for i in res:
+            if i[1]['solved'] != 0:
+                draw.rectangle((x1, y1 + height, x2, y1 + height + 50), fill=(255, 255, 255))
+                draw.text((x1 + 20, y1 + height + 10), str(index), font=font, fill=color1)
+                draw.text((x1 + 120, y1 + height + 10), i[0], font=font, fill=await self.get_color(await self.get_rating(i[0])))
+                draw.text((x1 + 420, y1 + height + 10), str(i[1]['solved']), font=font, fill=color1)
+                draw.text((x1 + 620, y1 + height + 10), str(i[1]['average_rating']), font=font, fill=await self.get_color(i[1]['average_rating']))
+                index += 1
+                height += 50
+
+        # Create image with calculated height
+        image = image.crop((0, 0, 800, height + 50))
+        return image
+
+    async def get_rating(self, username):
+        url = f"https://codeforces.com/api/user.info?handles={username}"
+        try:
+            async with httpx.AsyncClient(proxies={
+                "http://": "http://127.0.0.1/7890",
+                "https://": "http://127.0.0.1/7890"
+            }) as client:
+                r = await client.get(url, timeout=10)
+        except Exception as e:
+            logger.error(e)
+            return "Error"
+        j = r.json()
+        if j['status'] == "OK":
+            res = j['result']
+            res = res[0]
+            return res['rating']
+
+    async def get_color(self, rating):
+        if rating == 0:
+            return (0, 0, 0)
+        elif rating < 1200:
+            return (128, 128, 128)
+        elif rating < 1400:
+            return (0, 128, 0)
+        elif rating < 1600:
+            return (3, 168, 158)
+        elif rating < 1900:
+            return (0, 0, 255)
+        elif rating < 2100:
+            return (170, 0, 170)
+        elif rating < 2400:
+            return (255, 140, 0)
+        else:
+            return (255, 0, 0)
 
 
 cf = Codeforces()

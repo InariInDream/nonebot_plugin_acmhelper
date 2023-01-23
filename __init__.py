@@ -12,6 +12,7 @@ import random
 import httpx
 from .data_source import luogu, cf, msg_manager
 from .data_struct import MsgData
+from nonebot_plugin_PicMenu.img_tool import img2b64
 
 
 scheduler = require("nonebot_plugin_apscheduler").scheduler
@@ -73,7 +74,10 @@ async def rd_problem_handle(args: Message = CommandArg()):
 async def rank_handle():
     await rank.send("查询中...请稍等几秒")
     msg = await cf.rank(cmd="day")
-    await rank.finish(msg)
+    if type(msg) is not str:
+        await week_rank.finish(MessageSegment.image('base64://' + img2b64(msg)))
+    else:
+        await week_rank.finish(msg)
 
 
 @rank_add.handle()
@@ -90,7 +94,10 @@ async def rank_add_handle(args: Message = CommandArg()):
 async def week_rank_handle():
     await week_rank.send("查询中...请稍等几秒")
     msg = await cf.rank(cmd="week")
-    await week_rank.finish(msg)
+    if type(msg) is not str:
+        await week_rank.finish(MessageSegment.image('base64://' + img2b64(msg)))
+    else:
+        await week_rank.finish(msg)
 
 
 @help_list.handle()
