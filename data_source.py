@@ -12,20 +12,19 @@ from pathlib import Path
 from .data_struct import MsgData
 from PIL import Image, ImageDraw, ImageFont
 
-
 headers = {
-            "authority": "www.luogu.com.cn",
-            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-            "accept-language": "zh-CN,zh;q=0.9",
-            "cache-control": "max-age=0",
-            "referer": "https://www.luogu.com.cn/",
-            "sec-fetch-dest": "document",
-            "sec-fetch-mode": "navigate",
-            "sec-fetch-site": "same-origin",
-            "sec-fetch-user": "?1",
-            "upgrade-insecure-requests": "1",
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"
-        }
+    "authority": "www.luogu.com.cn",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "accept-language": "zh-CN,zh;q=0.9",
+    "cache-control": "max-age=0",
+    "referer": "https://www.luogu.com.cn/",
+    "sec-fetch-dest": "document",
+    "sec-fetch-mode": "navigate",
+    "sec-fetch-site": "same-origin",
+    "sec-fetch-user": "?1",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"
+}
 
 cwd = Path.cwd()
 
@@ -38,8 +37,8 @@ async def msg_manager(msg_data):
     for i in msg_data.tags:
         msg += f"{i}, "
     msg += "\n"
-    msg += f"链接：{ msg_data.href}\n"
-    msg += f"题目来源：{ msg_data.platform}"
+    msg += f"链接：{msg_data.href}\n"
+    msg += f"题目来源：{msg_data.platform}"
     return msg
 
 
@@ -130,7 +129,6 @@ class Codeforces:
         self.rank_list = []
         self.nick_name = {}
 
-
     async def random_problem_set(self, data: MsgData, cmd=None):
         """
         随机获取Codeforces题目
@@ -198,7 +196,6 @@ class Codeforces:
         with open(self.cwd / 'data' / 'acm_helper' / 'config.json', 'r', encoding='utf-8') as f:
             self.nick_name = json.load(f)["nick_name"]
 
-
     def add_rank_list(self, handle: str, nickname):
         """
         添加rank_list
@@ -246,14 +243,15 @@ class Codeforces:
                     await asyncio.sleep(0.5)  # 过0.5秒再次请求
                     try:
                         async with httpx.AsyncClient(proxies={
-                        "http://": "http://127.0.0.1:7890",
-                        "https://": "https://127.0.0.1:7890"
-                    }) as client:
+                            "http://": "http://127.0.0.1:7890",
+                            "https://": "https://127.0.0.1:7890"
+                        }) as client:
                             r = await client.get(url, timeout=20)
                     except:
                         async with httpx.AsyncClient() as client:
                             r = await client.get(url, timeout=20)
-                    j = r.json()
+                    else:
+                        j = r.json()
                 if j["status"] == "OK":
                     res[user] = {"solved": 0,
                                  "rating": 0,
@@ -265,6 +263,7 @@ class Codeforces:
                         for p in problem_list:
                             pass_time = str(datetime.datetime.fromtimestamp(p["creationTimeSeconds"]))[0:10]
                             now_time = str(datetime.datetime.now())[0:10]
+
                             if pass_time == now_time and p["verdict"] == "OK" and p["problem"]["name"] not in sol_list:
                                 sol_list.add(p["problem"]["name"])
                                 res[user]["solved"] += 1
@@ -279,6 +278,7 @@ class Codeforces:
                         now_time_stamp = int(time.time())
                         for p in problem_list:
                             pass_time_stamp = p["creationTimeSeconds"]
+                            logger.info(p)
                             if now_time_stamp - pass_time_stamp <= 24 * 3600 * 7 and p["verdict"] == "OK" and p["problem"]["name"] not in sol_list:
                                 sol_list.add(p["problem"]["name"])
                                 res[user]["solved"] += 1
