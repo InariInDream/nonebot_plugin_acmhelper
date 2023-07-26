@@ -389,8 +389,8 @@ class Codeforces:
         height = 50  # title row height
         for i in sorted_res:
             color = await self.get_color(i[1])
+            url = f"https://codeforces.com/api/user.status?handle={i[0]}&from=1&count=1"
             try:
-                url = f"https://codeforces.com/api/user.rating?handle={i[0]}"
                 async with httpx.AsyncClient(proxies={
                     "http://": "http://127.0.0.1:7890",
                     "https://": "https://127.0.0.1:7890"
@@ -398,18 +398,16 @@ class Codeforces:
                     r = await client.get(url, timeout=20)
             except Exception as e:
                 logger.error(e)
-                pass
-            else:
-                j = r.json()
-                if j['status'] == 'OK':
-                    if len(j['result']) > 0:
-                        if abs(j['result'][-1]['ratingUpdateTimeSeconds'] - int(time.time())) < 86400 * 30:
-                            # 淡化颜色
-                            color = await self.get_color(i[1])
-                            color = (int(color[0] * 0.6), int(color[1] * 0.6), int(color[2] * 0.6))
-                    else:
-                        color = await self.get_color(i[1])
-                        color = (int(color[0] * 0.6), int(color[1] * 0.6), int(color[2] * 0.6))
+                async with httpx.AsyncClient() as client:
+                    r = await client.get(url, timeout=20)
+            j = r.json()
+            if j['status'] == 'OK':
+                if len(j['result']) > 0:
+                    if abs(j['result'][0]['creationTimeSeconds'] - int(time.time())) > 86400 * 15:
+                        # 淡化颜色
+                        color = (224, 224, 224)
+                else:
+                    color = (224, 224, 224)
 
             draw.rectangle((x1, y1 + height, x2, y1 + height + 50), fill=(255, 255, 255))
             draw.text((x1 + 20, y1 + height + 10), f"{str(index)} ({self.nick_name[i[0]]})", font=zh_font, fill=color1)
