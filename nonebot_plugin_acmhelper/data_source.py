@@ -508,14 +508,21 @@ class Codeforces:
     async def get_max_rating(self, username):
         url = f"https://codeforces.com/api/user.info?handles={username}"
         try:
+            # 尝试使用代理
             async with httpx.AsyncClient(proxies={
                 "http://": "http://127.0.0.1:7890",
                 "https://": "https://127.0.0.1:7890"
             }) as client:
                 r = await client.get(url, timeout=20)
         except Exception as e:
-            logger.error(e)
-            return "Error"
+            logger.error(f"Proxy error: {e}")
+            try:
+                # 代理失败，尝试直连
+                async with httpx.AsyncClient() as client:
+                    r = await client.get(url, timeout=20)
+            except Exception as e:
+                logger.error(f"Direct connection error: {e}")
+                return "Error"
         j = r.json()
         if j['status'] == "OK":
             res = j['result']
@@ -524,7 +531,6 @@ class Codeforces:
                 return res['maxRating']
             else:
                 return 0
-
 
     async def get_color(self, rating):
         if rating == 0:
