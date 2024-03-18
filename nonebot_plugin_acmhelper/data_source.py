@@ -444,6 +444,87 @@ class Codeforces:
                 return res['rating']
             else:
                 return 0
+            
+    async def max_rating_rank(self):
+        self.get_rank_list()
+        res = {}
+        for user in self.rank_list:
+            max_rating = await self.get_max_rating(user)
+            res[user] = max_rating
+        sorted_res = sorted(res.items(), key=lambda x: x[1], reverse=True)
+
+        image = Image.new('RGB', (700, 2600), (255, 255, 255))
+        draw = ImageDraw.Draw(image)
+        font = ImageFont.truetype("arial.ttf", 30)
+        zh_font = ImageFont.truetype("simhei.ttf", 30)
+        color1 = (0, 0, 0)
+        # Draw table
+        x1 = 10
+        y1 = 10
+        x2 = 700
+        y2 = 50
+
+        # Draw table title
+        draw.rectangle((x1, y1, x2, y2), fill=(200, 200, 200))
+        draw.text((x1 + 20, y1 + 10), "序号", font=zh_font, fill=color1)
+        draw.text((x1 + 220, y1 + 10), "昵称", font=zh_font, fill=color1)
+        draw.text((x1 + 520, y1 + 10), "最高Rating", font=font, fill=color1)
+
+        index = 1
+        height = 50  # title row height
+        for i in sorted_res:
+            color = await self.get_color(i[1])
+            url = f"https://codeforces.com/api/user.status?handle={i[0]}&from=1&count=1"
+            try:
+                async with httpx.AsyncClient(proxies={
+                    "http://": "http://127.0.0.1:7890",
+                    "https://": "https://127.0.0.1:7890"
+                }) as client:
+                    r = await client.get(url, timeout=20)
+            except Exception as e:
+                logger.error(e)
+                async with httpx.AsyncClient() as client:
+                    r = await client.get(url, timeout=20)
+            j = r.json()
+            if j['status'] == 'OK':
+                if len(j['result']) > 0:
+                    if abs(j['result'][0]['creationTimeSeconds'] - int(time.time())) > 86400 * 15:
+                        # 淡化颜色
+                        color = (224, 224, 224)
+                else:
+                    color = (224, 224, 224)
+
+            draw.rectangle((x1, y1 + height, x2, y1 + height + 50), fill=(255, 255, 255))
+            draw.text((x1 + 20, y1 + height + 10), f"{str(index)} ({self.nick_name[i[0]]})", font=zh_font, fill=color1)
+            draw.text((x1 + 220, y1 + height + 10), i[0], font=font, fill=color)
+            draw.text((x1 + 520, y1 + height + 10), str(i[1]), font=font, fill=color)
+            index += 1
+            height += 50
+            draw.line((x1, y1 + height, x2, y1 + height), fill=(0, 0, 0), width=5)
+
+        image = image.crop((0, 0, 700, height + 50))
+        return image
+
+    async def get_max_rating(self, username):
+        url = f"https://codeforces.com/api/user.info?handles={username}"
+        try:
+            async with httpx.AsyncClient(proxies={
+                "http://": "http://127.0.0.1:7890",
+                "https://": "https://127.0.0.1:7890"
+            }) as client:
+                r = await client.get(url, timeout=20)
+        except Exception as e:
+            logger.error(e)
+            return "Error"
+        j = r.json()
+        if j['status'] == "OK":
+            res = j['result']
+            res = res[0]
+            if 'maxRating' in res:
+                return res['maxRating']
+            else:
+                return 0
+
 
     async def get_color(self, rating):
         if rating == 0:

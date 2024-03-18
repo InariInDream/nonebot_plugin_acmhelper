@@ -29,6 +29,8 @@ week_rank = on_command("cf周榜", permission=GROUP, priority=5, block=False)
 
 rating_rank = on_command("rating", permission=GROUP, priority=5, block=False)
 
+max_rating_rank = on_command("maxrating", permission=GROUP, priority=5, block=False)
+
 
 cf_tags = ["binary search", "bitmasks", "brute force", "chinese remainder theorem", "combinatorics", "constructive algorithms", "data structures", "dfs and similar", "divide and conquer", "dp", "dsu", "expression parsing", "fft", "flows", "games", "geometry", "graph matchings", "graphs", "greedy", "hashing", "implementation", "math", "matrices", "meet-in-the-middle", "number theory", "probabilities", "schedules", "shortest paths", "sortings", "string suffix structures", "strings", "ternary search", "trees", "two pointers"]
 
@@ -115,7 +117,15 @@ async def rating_rank_handle():
         await rating_rank.finish(MessageSegment.image('base64://' + img2b64(msg)))
     else:
         await rating_rank.finish(msg)
-
+        
+@max_rating_rank.handle()
+async def max_rating_rank_handle():
+    await max_rating_rank.send("查询中...请稍等几秒")
+    msg = await cf.max_rating_rank()
+    if type(msg) is not str:
+        await max_rating_rank.finish(MessageSegment.image('base64://' + img2b64(msg)))
+    else:
+        await max_rating_rank.finish(msg)
 
 @help_list.handle()
 async def help_list_handle():
