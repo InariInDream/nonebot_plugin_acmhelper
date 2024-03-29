@@ -137,4 +137,5 @@ async def help_list_handle():
     msg += "5. cf周榜:查看cf周榜\n"
     msg += "6. rating:查看cf rating排行\n"
     msg += "7. cfrate [cfid]:查看指定id的rating\n"
+    msg += "8. maxrating:查看历史最高rating\n"
     await help_list.finish(msg)
