@@ -209,6 +209,19 @@ class Codeforces:
             self.nick_name[handle] = nickname
             with open(self.cwd / 'data' / 'acm_helper' / 'config.json', 'w', encoding='utf-8') as f:
                 json.dump({"rank_list": self.rank_list, "nick_name": self.nick_name}, f, ensure_ascii=False, indent=4)
+                
+    def delete_rank_list(self, handle: str):
+        """
+        删除rank_list
+        :param handle:
+        :return:
+        """
+        self.get_rank_list()
+        if handle in self.rank_list:
+            self.rank_list.remove(handle)
+            self.nick_name.pop(handle)
+            with open(self.cwd / 'data' / 'acm_helper' / 'config.json', 'w', encoding='utf-8') as f:
+                json.dump({"rank_list": self.rank_list, "nick_name": self.nick_name}, f, ensure_ascii=False, indent=4)
 
     async def rank(self, cmd):
         """
@@ -366,6 +379,7 @@ class Codeforces:
         for user in self.rank_list:
             rating = await self.get_rating(user)
             res[user] = rating
+        logger.info("Sorted res: " + str(res))
         sorted_res = sorted(res.items(), key=lambda x: x[1], reverse=True)
 
         image = Image.new('RGB', (700, 2600), (255, 255, 255))
@@ -406,6 +420,8 @@ class Codeforces:
                     if abs(j['result'][0]['creationTimeSeconds'] - int(time.time())) > 86400 * 15:
                         # 淡化颜色
                         color = (224, 224, 224)
+                        if abs(j['result'][0]['creationTimeSeconds'] - int(time.time())) > 86400 * 30:
+                            color = (192, 192, 192)
                 else:
                     color = (224, 224, 224)
 
@@ -419,6 +435,37 @@ class Codeforces:
 
         image = image.crop((0, 0, 700, height + 50))
         return image
+    
+    async def delete_days(self, days):
+        self.get_rank_list()
+        
+        sorted_res = sorted(self.rank_list)
+        deleted = []
+        for i in sorted_res:
+            url = f"https://codeforces.com/api/user.status?handle={i}&from=1&count=1"
+            try:
+                async with httpx.AsyncClient(proxies={
+                    "http://": "http://127.0.0.1:7890",
+                    "https://": "https://127.0.0.1:7890"
+                }) as client:
+                    r = await client.get(url, timeout=20)
+            except Exception as e:
+                logger.error(e)
+                async with httpx.AsyncClient() as client:
+                    r = await client.get(url, timeout=20)
+            j = r.json()
+            if j['status'] == 'OK':
+                if len(j['result']) > 0:
+                    if abs(j['result'][0]['creationTimeSeconds'] - int(time.time())) > 86400 * days:
+                        deleted.append(f"{i} {self.nick_name[i]}")
+                        logger.info(f"Delete {i}, {self.nick_name[i]}")
+                        self.rank_list.remove(i)
+                        self.nick_name.pop(i)
+                        
+        with open(self.cwd / 'data' / 'acm_helper' / 'config.json', 'w', encoding='utf-8') as f:
+            json.dump({"rank_list": self.rank_list, "nick_name": self.nick_name}, f, ensure_ascii=False, indent=4)
+            
+        return deleted
 
     async def get_rating(self, username):
         url = f"https://codeforces.com/api/user.info?handles={username}"
@@ -433,8 +480,8 @@ class Codeforces:
                 async with httpx.AsyncClient() as client:
                     r = await client.get(url, timeout=20)
         except Exception as e:
-            logger.error(e)
-            return "Error"
+            logger.error(f"Net Error: {e}")
+            return -1
         j = r.json()
         if j['status'] == "OK":
             res = j['result']

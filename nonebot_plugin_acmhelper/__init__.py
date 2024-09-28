@@ -31,6 +31,10 @@ rating_rank = on_command("rating", permission=GROUP, priority=5, block=False)
 
 max_rating_rank = on_command("maxrating", permission=GROUP, priority=5, block=False)
 
+delete_rank = on_command("删除不活跃", permission=GROUP, priority=5, block=False)
+
+rank_delete = on_command("rank删除", permission=GROUP, priority=5, block=False)
+
 
 cf_tags = ["binary search", "bitmasks", "brute force", "chinese remainder theorem", "combinatorics", "constructive algorithms", "data structures", "dfs and similar", "divide and conquer", "dp", "dsu", "expression parsing", "fft", "flows", "games", "geometry", "graph matchings", "graphs", "greedy", "hashing", "implementation", "math", "matrices", "meet-in-the-middle", "number theory", "probabilities", "schedules", "shortest paths", "sortings", "string suffix structures", "strings", "ternary search", "trees", "two pointers"]
 
@@ -127,6 +131,20 @@ async def max_rating_rank_handle():
     else:
         await max_rating_rank.finish(msg)
 
+@delete_rank.handle()
+async def delete_rank_handle(args: Message = CommandArg()):
+    days = args.extract_plain_text()
+    if not int(days):
+        await delete_rank.finish("参数错误")
+    await delete_rank.send("查询中...请稍等几秒")
+    deleted = await cf.delete_days(int(days))
+    print(deleted)
+    msg = "删除了以下用户:\n"
+    if deleted:
+        for i in deleted:
+            msg += f"{i}\n"
+    await delete_rank.finish(msg)
+
 @help_list.handle()
 async def help_list_handle():
     msg = "ACM助手使用说明\n\n"
@@ -138,4 +156,5 @@ async def help_list_handle():
     msg += "6. rating:查看cf rating排行\n"
     msg += "7. cfrate [cfid]:查看指定id的rating\n"
     msg += "8. maxrating:查看历史最高rating\n"
+    msg += "9. 删除不活跃 [days]:删除days天内没有刷题的用户(谨慎使用)\n"
     await help_list.finish(msg)
